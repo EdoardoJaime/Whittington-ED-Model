@@ -1,0 +1,2782 @@
+;ALL ROOMS, CORNERS AND LISTS ARE DEFINED AS GLOBAL VARIABLES. They are split in rows for clarity. Rooms;Doors;Corners;Lists
+extensions [stats csv profiler table]
+globals [
+  ;Rooms (wrmaj = waiting room majors)
+wrmaj wrmaj2 wrmajtot maj1 maj2 maj3 maj4 maj5 maj6 maj7 maj8 maj9 maj10 maj11 maj12 maj12a maj14 maj15 majmain majtop majbot majtot majmaintot majors-rooms all-majors
+  ;nurse version of majors (enlarged)
+nmaj1 nmaj2 nmaj3 nmaj4 nmaj5 nmaj6 nmaj7 nmaj8 nmaj9 nmaj10 nmaj11 nmaj12 nmaj12a nmaj14 nmaj15
+gp wr wrmain wrleft wrtop wrright wrbot top-stand-up corridor-stand-up reception-stand-up wr-stand-up all-wr tr1 tr2 tr3 tr4 tr5 trtot wr1
+cdu1 cdu2 stretcher1 stretcher2 stretcher3 stretcher4 stretcher5
+utc1 utc2 utc3 utc4 utc5 utc6 utc7 utc8 utcmain utc-rooms
+xr1 xr2 cat us
+r1 r2 r3 r4 rtot
+start
+exit
+
+;maxpatch of rooms
+pwrmaj pmaj1 pmaj2 pmaj3 pmaj4 pmaj5 pmaj6 pmaj7 pmaj8 pmaj9 pmaj10 pmaj11 pmaj12 pmaj12a pmaj14 pmaj15
+pgp pwr ptr1 ptr2 ptr3 ptr4 ptr5
+pcdu1 pcdu2 pstretcher1 pstretcher2 pstretcher3 pstretcher4 pstretcher5
+putc1 putc2 putc3 putc4 putc5 putc6 putc7 putc8
+pxr1 pxr2 pcat pus
+pr1 pr2 pr3 pr4
+pstart
+
+;Doors
+dmaj1 dmaj2 dmaj3 dmaj4 dmaj5 dmaj6 dmaj7 dmaj8 dmaj9 dmaj10 dmaj11 dmaj12 dmaj12a dmaj14 dmaj15 dmajmainl dmajmainr
+dgp dtr1 dtr2 dtr3 dtr4 dtr5
+dcdu1 dcdu2
+dutc1 dutc2 dutc3 dutc4 dutc5 dutc6 dutc7 dutc8
+dxr1 dxr2 dcat dus
+dr1 dr2
+dwalk-in1
+dwalk-in2
+dambulance1
+dambulance2
+
+;corners
+cmaj1 cmaj2 cmaj3 cmaj4 cmaj5 cmaj6
+ct1 ct2 ct3 ct4 ct5
+ccdu1 ccdu2 ambulatory
+crec1 crec2 crec3 crec4 crec5 crec6
+cmin1 cmin2a cmin2 cmin3 cmin4 cmin5 cmin6 cmin7 admit
+cped1 cped2 cped3
+
+;*****LISTS*****
+
+ ;***WALK-IN ENTRANCE
+  start-to-wr
+  wr-to-start
+
+  start-to-crec1
+  crec1-to-start
+  crec1-to-dr1
+  crec1-to-wr
+
+  exit-to-wr
+  wr-to-exit
+
+  cmin1-to-exit
+  exit-to-cmin1
+
+  ;triage to wr
+  wr-to-tr1
+  wr-to-tr2
+  wr-to-tr3
+  wr-to-tr4
+  wr-to-tr5
+
+  tr1-to-wr
+  tr2-to-wr
+  tr3-to-wr
+  tr4-to-wr
+  tr5-to-wr
+
+  ;wr to cmin1
+  cmin1-to-wr
+  wr-to-cmin1
+
+  ;wr to gp
+  wr-to-gp
+  gp-to-wr
+
+  ;cmin to xr,us, cat
+  cmin1-to-XR1
+  cmin1-to-XR2
+  cmin1-to-CAT
+  cmin1-to-US
+
+  XR1-to-cmin1
+  XR2-to-cmin1
+  CAT-to-cmin1
+  US-to-cmin1
+
+  cmin1-to-cmin7
+  cmin7-to-XR1
+  cmin7-to-XR2
+  cmin7-to-CAT
+  cmin7-to-US
+
+  cmin7-to-cmin1
+  XR1-to-cmin7
+  XR2-to-cmin7
+  CAT-to-cmin7
+  US-to-cmin7
+
+  ;cmin to utc
+  utc1-to-cmin1
+  utc2-to-cmin1
+  utc3-to-cmin1
+  utc4-to-cmin1
+  utc5-to-cmin1
+  utc6-to-cmin1
+  utc7-to-cmin1
+  utc8-to-cmin1
+
+  cmin1-to-utc1
+  cmin1-to-utc2
+  cmin1-to-utc3
+  cmin1-to-utc4
+  cmin1-to-utc5
+  cmin1-to-utc6
+  cmin1-to-utc7
+  cmin1-to-utc8
+
+  utcmain-to-crec5
+  crec5-to-utcmain
+
+  utcmain-to-cmin1
+  cmin1-to-utcmain
+
+  cmin1-to-cmaj6
+  cmaj6-to-cmin1
+  cmin1-to-admit
+
+ ;***AMBULANCE ENTRANCES
+ ;Ambulance to triage & reverse
+  start-to-ambulance
+  ambulance-to-start
+
+  ambulance-to-cmaj6
+  cmaj6-to-ambulance
+
+  ambulance-to-dr1
+  dr1-to-ambulance
+
+  ambulance-to-wr
+  wr-to-ambulance
+
+  dr1-to-r1
+  dr1-to-r2
+  dr1-to-r3
+  dr1-to-r4
+  r1-to-dr1
+  r2-to-dr1
+  r3-to-dr1
+  r4-to-dr1
+
+  ambulance-to-tr1
+  ambulance-to-tr2
+  ambulance-to-tr3
+  ambulance-to-tr4
+  ambulance-to-tr5
+  tr5-to-ambulance
+  tr4-to-ambulance
+  tr3-to-ambulance
+  tr2-to-ambulance
+  tr1-to-ambulance
+
+  ;Ambulance to resus & reverse
+  ambulance-to-r1
+  ambulance-to-r2
+  ambulance-to-r3
+  ambulance-to-r4
+  r1-to-ambulance
+  r2-to-ambulance
+  r3-to-ambulance
+  r4-to-ambulance
+
+  cmaj6-to-dr2
+  dr2-to-cmaj6
+
+  ;***TRIAGE TO ... ***
+
+  ;Triage to cmaj6 & reverse and to resus & reverse
+  tr1-to-cmaj6
+  tr2-to-cmaj6
+  tr3-to-cmaj6
+  tr4-to-cmaj6
+  tr5-to-cmaj6
+  cmaj6-to-tr1
+  cmaj6-to-tr2
+  cmaj6-to-tr3
+  cmaj6-to-tr4
+  cmaj6-to-tr5
+  tr1-to-dr1
+  tr2-to-dr1
+  tr3-to-dr1
+  tr4-to-dr1
+  tr5-to-dr1
+  dr1-to-tr1
+  dr1-to-tr2
+  dr1-to-tr3
+  dr1-to-tr4
+  dr1-to-tr5
+
+  ;nurses from majors to triage
+  ct1-to-majmain
+  majmain-to-ct1
+
+  ;***MAJORS MOVEMENT ***
+
+  ;cmaj6 to all majors & reverse
+  cmaj6-to-wrmaj
+  cmaj6-to-maj1
+  cmaj6-to-maj2
+  cmaj6-to-maj3
+  cmaj6-to-maj4
+  cmaj6-to-maj5
+  cmaj6-to-maj6
+  cmaj6-to-maj7
+  cmaj6-to-maj8
+  cmaj6-to-maj9
+  cmaj6-to-maj10
+  cmaj6-to-maj11
+  cmaj6-to-maj12
+  cmaj6-to-maj12a
+  cmaj6-to-maj14
+  cmaj6-to-maj15
+  maj1-to-cmaj6
+  maj2-to-cmaj6
+  maj3-to-cmaj6
+  maj4-to-cmaj6
+  maj5-to-cmaj6
+  maj6-to-cmaj6
+  maj7-to-cmaj6
+  maj8-to-cmaj6
+  maj9-to-cmaj6
+  maj10-to-cmaj6
+  maj11-to-cmaj6
+  maj12-to-cmaj6
+  maj12a-to-cmaj6
+  maj13-to-cmaj6
+  maj14-to-cmaj6
+  maj15-to-cmaj6
+
+  ;main majors to majors rooms and reverse
+  majmain-to-maj1
+  majmain-to-maj2
+  majmain-to-maj3
+  majmain-to-maj4
+  majmain-to-maj5
+  majmain-to-maj6
+  majmain-to-maj7
+  majmain-to-maj8
+  majmain-to-maj9
+  majmain-to-maj10
+  majmain-to-maj11
+  majmain-to-maj12
+  majmain-to-maj12a
+  majmain-to-maj14
+  majmain-to-maj15
+
+  maj1-to-majmain
+  maj2-to-majmain
+  maj3-to-majmain
+  maj4-to-majmain
+  maj5-to-majmain
+  maj6-to-majmain
+  maj7-to-majmain
+  maj8-to-majmain
+  maj9-to-majmain
+  maj10-to-majmain
+  maj11-to-majmain
+  maj12-to-majmain
+  maj12a-to-majmain
+  maj14-to-majmain
+  maj15-to-majmain
+
+  majmain-to-r1
+  majmain-to-r2
+  majmain-to-r3
+  majmain-to-r4
+  r1-to-majmain
+  r2-to-majmain
+  r3-to-majmain
+  r4-to-majmain
+
+  ;cmaj6 to cdu & reverse
+  cmaj6-to-cdu1
+  cmaj6-to-cdu2
+  cdu1-to-cmaj6
+  cdu2-to-cmaj6
+  stretcher1-to-cmaj6
+  stretcher2-to-cmaj6
+  stretcher5-to-cmaj6
+
+  ;cmaj4 to all majors & reverse
+  cmaj4-to-maj1
+  cmaj4-to-maj2
+  cmaj4-to-maj3
+  cmaj4-to-maj4
+  cmaj4-to-maj5
+  cmaj4-to-maj6
+  cmaj4-to-maj7
+  cmaj4-to-maj8
+  cmaj4-to-maj9
+  cmaj4-to-maj10
+  cmaj4-to-maj11
+  cmaj4-to-maj12
+  cmaj4-to-maj12a
+  cmaj4-to-maj14
+  cmaj4-to-maj15
+  maj1-to-cmaj4
+  maj2-to-cmaj4
+  maj3-to-cmaj4
+  maj4-to-cmaj4
+  maj5-to-cmaj4
+  maj6-to-cmaj4
+  maj7-to-cmaj4
+  maj8-to-cmaj4
+  maj9-to-cmaj4
+  maj10-to-cmaj4
+  maj11-to-cmaj4
+  maj12-to-cmaj4
+  maj12a-to-cmaj4
+  maj13-to-cmaj4
+  maj14-to-cmaj4
+  maj15-to-cmaj4
+
+  ;cmaj4 to cdu and reverse, stretchers and reverse, and cmaj6
+  cmaj4-to-cdu1
+  cmaj4-to-cdu2
+  cdu1-to-cmaj4
+  cdu2-to-cmaj4
+  cmaj4-to-ccdu1
+  ccdu1-to-cmaj4
+  ccdu1-to-ambulatory
+  cdu1-to-ambulatory
+  cdu2-to-ambulatory
+  cmaj4-to-stretcher1
+  cmaj4-to-stretcher2
+  cmaj4-to-stretcher3
+  cmaj4-to-stretcher4
+  cmaj4-to-stretcher5
+  stretcher1-to-cmaj4
+  stretcher2-to-cmaj4
+  stretcher3-to-cmaj4
+  stretcher4-to-cmaj4
+  stretcher5-to-cmaj4
+  cmaj4-to-cmaj6
+  cmaj6-to-cmaj4
+
+  ;All majors room to wrmaj & reverse
+  wrmaj-to-maj1
+  wrmaj-to-maj2
+  wrmaj-to-maj3
+  wrmaj-to-maj4
+  wrmaj-to-maj5
+  wrmaj-to-maj6
+  wrmaj-to-maj7
+  wrmaj-to-maj8
+  wrmaj-to-maj9
+  wrmaj-to-maj10
+  wrmaj-to-maj11
+  wrmaj-to-maj12
+  wrmaj-to-maj12a
+  wrmaj-to-maj14
+  wrmaj-to-maj15
+  maj1-to-wrmaj
+  maj2-to-wrmaj
+  maj3-to-wrmaj
+  maj4-to-wrmaj
+  maj5-to-wrmaj
+  maj6-to-wrmaj
+  maj7-to-wrmaj
+  maj8-to-wrmaj
+  maj9-to-wrmaj
+  maj10-to-wrmaj
+  maj11-to-wrmaj
+  maj12-to-wrmaj
+  maj12a-to-wrmaj
+  maj14-to-wrmaj
+  maj15-to-wrmaj
+
+  wrmaj-to-majmain
+  majmain-to-wrmaj
+
+  ; other variables
+  target-lists
+  finished-patients
+  rooms
+  destination
+  iteration
+  ;sickest
+  healthiest
+  tick-con
+  max-loops
+  changing-data
+  step
+
+  majors
+  nmajors
+  majors-lists
+  majors-mp
+
+ ;;DATA IMPORT - > FIXED
+
+  data
+  walk-in-arrival	
+  ambulance-arrival	
+
+  ; priorities
+  priority-1	
+  priority-2	
+  priority-3	
+  priority-4	
+  priority-5
+  prio1-gp	
+  prio1-exit	
+  prio3-maj	
+  prio3-utc	
+
+  ;leave probability
+  resus-admit	
+  gp-exit	
+  utc-wr	
+  utc-imag	
+  utc-exit	
+  maj-exit	
+  maj-cdu	
+  maj-admit	
+  maj-imag	
+  cdu-exit	
+  cdu-admit
+  cdu-amb
+
+  ;waiting times
+  wait-triage	
+  wait-resus	
+  wait-maj	
+  wait-utc	
+  wait-gp	
+  wait-imag	
+  wait-cdu
+
+  ; testing
+  stay-time
+  urg-list
+  wr-wait
+  stay-timeA
+  stay-timeNA
+  time-to-treatment
+
+
+  ;doctor waiting time
+  doc-wait-resus
+  doc-wait-maj
+
+ ;;DATA IMPORT - > VARIABLE
+  numbers
+  change-numbers
+  arrival-rate
+  n
+  st95
+
+]
+
+breed [doctors doctor]
+breed [nurses nurse]
+breed [patients patient]
+
+patients-own [ttt treat? treatment-time time? origin cdu-patient triage urgency wait-time priority1 doctor-time target-list counter
+              next-target nurse-ready ready-to-leave getting-picked-up nurse-following urg3-list total-stay tr-wait loops]
+nurses-own [follower target-list counter next-target wait-time utc maj]
+doctors-own[target-list counter next-target wait-time]
+
+;patch variables
+patches-own [occupancy previous patient-priority occup-cdu]
+
+;+++++++++++++++++++++++++++++++++++++ SETUP ++++++++++++++++++++++++++++++++++++++++++++
+to setup
+  clear-all
+  import-pcolors "New_ED_Plan3.png"
+  set tick-con 220
+  import-fixed-data
+  ;Create all relevant areas/corners/maxpatches
+  define-areas
+  define-mp
+  ;Create direction lists
+  create-lists
+  ;set initial patch occupancies
+  ;set-patch-occupancy
+  ;make-patients
+  ;make-doctors-utc
+  ;make-nurses-tr
+  ;make-doctors-maj
+  ;make-doctors-xr
+  make-maj-lists
+  set finished-patients 0
+
+  ; the file for the data import of time needs to be always open. So it goes in the setup.
+  ; If you put it in the Go, it will only read the first number and no go through the colunm and read other line.
+  file-close-all
+  file-open "changing_data.3.5.csv"
+  set n-doctors-utc 0
+  set n-doctors-majors 0
+  set n-doctors-triage 0
+  set n-doctors-xr 0
+  set n-nurses-majors 0
+  set n-nurses-triage 0
+  set n-nurses-majors 0
+  set n-nurses-utc 0
+  set n-doctors-gp 0
+  make-patients
+  reset-ticks
+  set stay-time (list)
+  set urg-list (list)
+  set wr-wait (list)
+  set stay-timeA (list)
+  set stay-timeNA (list)
+  set time-to-treatment (list)
+  set step 2.5
+  set n 0
+end
+
+to-report half-patch [patch1 patch2]
+  report patch (floor (patch1 / 4)) (floor (patch2 / 4))
+end
+
+
+to make-patients
+
+  let seat1 half-patch 669 347
+  let seat2 half-patch 700 347
+  let seat3 half-patch 669 317
+  let seat4 half-patch 700 317
+  let seat5 half-patch 669 287
+  let seat6 half-patch 700 287
+  let seat7 half-patch 669 257
+  let seat8 half-patch 700 257
+  let seat9 half-patch 669 227
+  let seat10 half-patch 700 227
+  let seat11 half-patch 669 197
+  let seat12 half-patch 700 197
+  let seat13 half-patch 669 167
+  let seat14 half-patch 700 167
+  let seat17 half-patch 625 245
+  let seat18 half-patch 625 223
+  let seat19 half-patch 625 202
+  let seat20 half-patch 625 180
+  let seat21 half-patch 685 115
+  let seat22 half-patch 710 115
+  let seat23 half-patch 735 115
+  let seat24 half-patch 760 115
+  let seat25 half-patch 785 115
+  let seat26 half-patch 810 115
+  let seat27 half-patch 675 410
+  let seat28 half-patch 703 410
+  let seat29 half-patch 732 410
+  let seat30 half-patch 760 410
+  let seat31 half-patch 760 381
+  let seat32 half-patch 760 352
+  let seat33 half-patch 760 323
+  let seat34 half-patch 760 293
+  let seat35 half-patch 760 264
+  let seat36 half-patch 760 235
+
+  let seats (list seat1 seat2 seat3 seat4 seat5 seat6 seat7 seat8 seat9 seat10 seat11 seat12 seat13 seat14 seat17 seat18 seat19
+    seat20 seat21 seat22 seat23 seat24 seat25 seat26 seat27 seat28 seat29 seat30 seat31 seat32 seat33 seat34 seat34 seat35 seat36)
+  let open-seats sublist seats 0 n-patients
+
+  foreach seats [x ->
+    if any? patients-on x[
+    ask patients-on x [
+      die
+    ]
+   ]
+  ]
+
+  foreach open-seats [x ->
+    ask x [sprout-patients 1 [
+      set color yellow
+      set size 11
+      set counter -2
+      set shape "dot"
+      set urgency routes-urg priority-1 priority-2 priority-3 priority-4 priority-5
+      set triage 0
+      set treat? 0
+      ]
+    ]
+  ]
+
+end
+
+; We make a list doctor-rooms that consists of all rooms that can take a doctor.
+; open-rooms is a sublist of doctor-rooms where the quantitiy of rooms is dependent on the quantity of doctors.
+
+
+;THIS WILL CHANGE BASED ON WHERE THE DOCTORS GO:
+;might not even need it
+to make-doctors-utc
+  let doctor-rooms (list utc1 utc2 utc3 utc4 utc5 utc6 utc7 utc8)
+  let open-rooms sublist doctor-rooms 0 n-doctors-utc
+
+
+  foreach doctor-rooms [x ->
+    ask doctors-on x [
+      die
+    ]
+  ]
+
+  foreach open-rooms [x ->
+    ask n-of 1 x [sprout-doctors 1 [
+      set shape "dot"
+      set color red
+      set size 11
+      set counter -2
+      ]
+    ]
+  ]
+end
+
+to make-doctors-xr
+  let doctor-rooms (list xr1 xr2 cat us)
+  let open-rooms sublist doctor-rooms 0 n-doctors-xr
+
+
+  foreach doctor-rooms [x ->
+    ask doctors-on x [
+      die
+    ]
+  ]
+
+  foreach open-rooms [x ->
+    ask n-of 1 x [sprout-doctors 1 [
+      set shape "dot"
+      set color red
+      set size 11
+      set counter -2
+      ]
+    ]
+  ]
+end
+to make-doctors-tr
+  let doctor-rooms (list tr1 tr2 tr3 tr4 tr5)
+  let open-rooms sublist doctor-rooms 0 n-doctors-triage
+
+
+  foreach doctor-rooms [x ->
+    ask doctors-on x [
+      die
+    ]
+  ]
+  foreach open-rooms [x ->
+    ask n-of 1 x [sprout-doctors 1 [
+      set shape "dot"
+      set color red
+      set size 11
+      set counter -2
+      ]
+    ]
+  ]
+end
+to make-doctors-maj
+  let mp (list pmaj1 pmaj2 pmaj3 pmaj4 pmaj5 pmaj6 pmaj7 pmaj8 pmaj9 pmaj10 pmaj11 pmaj12 pmaj12a pmaj14 pmaj15)
+if any? doctors-on majtot [
+    ask doctors-on majtot [
+      die
+    ]
+  ]
+
+  foreach mp [x ->
+    ask x [
+      if occupancy = 2 [
+        set occupancy 1
+      ]
+    ]
+  ]
+   ask n-of n-doctors-majors majmaintot [sprout-doctors 1 [
+    set shape "dot"
+    set color red
+    set size 11
+    set counter -2
+    ]
+  ]
+end
+
+to make-doctors-gp
+
+  let doctor-rooms (list gp)
+  let open-rooms sublist doctor-rooms 0 n-doctors-gp
+
+  foreach doctor-rooms [x ->
+    ask doctors-on x [
+      die
+    ]
+  ]
+
+  foreach open-rooms [x ->
+    ask n-of 1 x [sprout-doctors 1 [
+      set shape "dot"
+      set color red
+      set size 11
+      set counter -2
+      ]
+    ]
+  ]
+end
+
+to make-nurses-maj
+  if any? nurses with [maj = 1] [
+    ask nurses with [maj = 1] [
+      die
+    ]
+  ]
+   ask n-of n-nurses-majors majmaintot [sprout-nurses 1 [
+    set shape "dot"
+    set color blue
+    set size 11
+    set counter -2
+    set maj 1
+    ]
+  ]
+end
+
+to make-nurses-utc
+  if any? nurses with [utc = 1] [
+    ask nurses with [utc = 1] [
+      die
+    ]
+  ]
+   ask n-of n-nurses-utc utcmain [sprout-nurses 1 [
+    set shape "dot"
+    set color blue
+    set size 11
+    set counter -2
+    set utc 1
+    ]
+  ]
+end
+
+to make-nurses-tr
+  let nurses-rooms (list tr1 tr2 tr3 tr4 tr5)
+  let open-rooms sublist nurses-rooms 0 n-nurses-triage
+
+
+  foreach nurses-rooms [x ->
+    ask nurses-on x [
+      die
+    ]
+  ]
+
+  foreach open-rooms [x ->
+    ask n-of 1 x [sprout-nurses 1 [
+      set shape "dot"
+      set color blue
+      set size 11
+      set counter -2
+      ]
+    ]
+  ]
+end
+ ; +++++++++++++++++++++++++++++++++ MAIN CODE +++++++++++++++++++++++++++++++++++++++++
+
+to go
+
+
+  ask turtles [
+    set wait-time wait-time + 1
+    ]
+
+  ask patients [
+    if wait-time > 0 [
+      set priority1 urgency * wait-time
+    ]
+      set total-stay total-stay + 1
+      if triage = 0 [set tr-wait tr-wait + 1]
+     if treat? = 0 [set ttt ttt + 1]
+  ]
+
+  call-patients
+  walk-nurses
+  leave-n
+  ask turtles [
+    walk
+    ; if turtle is at destination, remove list and check if in wr --> sit
+    update-list
+    ;count the ticks spent on one patch
+  ]
+
+  ;leave room after 100 ticks
+  leave-after-time
+  move-maj-doctors
+  ;discharge must be before move-patients to prevent exiting patients from walking back in.
+  ;new-patients must be after leave patients, otherwise new patients just die.
+  discharge
+  new-patients
+  import-changing-data
+  move-patients
+  priority-calc
+  ;update-plots
+  update-n
+  tick
+  if ticks = 1680 * tick-con [
+    output-print  wr-wait
+    output-print  stay-time
+    output-print  stay-timeA
+    output-print  stay-timeNA
+    output-print  time-to-treatment
+    output-print median wr-wait
+    output-print median stay-time
+    output-print median stay-timeA
+    output-print median stay-timeNA
+    output-print median time-to-treatment
+
+    stop
+  ]
+end
+
+
+;The MAXPATCH finds the top-right patch inside an area.
+;This top-right patch is the patch that holds the occupancy value of the area in question.
+;It was inefficient to set an occupancy to every single patch, and led to loads of errors.
+
+to move-patients
+  ;Used to move patients from one area to another - no constraints
+  move start routes start-to-crec1 walk-in-arrival start-to-ambulance ambulance-arrival 0 0 0 0
+  move-amb dambulance2 5 ambulance-to-dr1 4 ambulance-to-cmaj6 3 ambulance-to-cmaj6  2 ambulance-to-wr  1 ambulance-to-wr
+  move-amb crec1 5 crec1-to-dr1 4 crec1-to-wr 3 crec1-to-wr  2 crec1-to-wr  1 crec1-to-wr
+
+  ;Should be all in this form
+
+  ;1% of people go to the bathroom
+  ;if random 100 <= 0 [
+  ;  move redroom rWC redroom-to-rWC
+
+end
+to call-patients
+
+
+;  **TRIAGE**
+ ;call-on (free room with nurse calls a patient)
+ ;call-on start end maxpatch lists
+
+ call-on all-wr tr1 ptr1 wr-to-tr1
+ call-on all-wr tr2 ptr2 wr-to-tr2
+ call-on all-wr tr3 ptr3 wr-to-tr3
+ call-on all-wr tr4 ptr4 wr-to-tr4
+ call-on all-wr tr5 ptr5 wr-to-tr5
+
+  ;**MINORS**
+  ;call-od (free room with doctor calls a patient)
+  ;call-od start end maxpatch lists
+  call-od all-wr gp pgp 1 1 wr-to-gp
+
+  call-od all-wr utc1 putc1 1 4  (sentence cmin1-to-utc1 wr-to-cmin1)
+  call-od all-wr utc2 putc2 1 4 (sentence cmin1-to-utc2 wr-to-cmin1)
+  call-od all-wr utc3 putc3 1 4 (sentence cmin1-to-utc3 wr-to-cmin1)
+  call-od all-wr utc4 putc4 1 4 (sentence cmin1-to-utc4 wr-to-cmin1)
+  call-od all-wr utc5 putc5 1 4 (sentence cmin1-to-utc5 wr-to-cmin1)
+  call-od all-wr utc6 putc6 1 4 (sentence cmin1-to-utc6 wr-to-cmin1)
+  call-od all-wr utc7 putc7 1 4 (sentence cmin1-to-utc7 wr-to-cmin1)
+  call-od all-wr utc8 putc8 1 4 (sentence cmin1-to-utc8 wr-to-cmin1)
+  call-od cmin7 xr1 pxr1 1 5 cmin7-to-xr1
+  call-od cmin7 xr2 pxr2 1 5 cmin7-to-xr2
+  call-od cmin7 cat pcat 1 5 cmin7-to-cat
+  call-od cmin7 us pus 1 5 cmin7-to-us
+
+  ;**MAJORS**
+  ;call-o (free room calls a patient)
+  ;call-o start end maxpatch lists
+   ; USED FOR TESTING
+;  call-o wr maj1 pmaj1 (sentence cmaj6-to-maj1 cmin1-to-cmaj6 wr-to-cmin1)
+;  call-o wr maj2 pmaj2 (sentence cmaj6-to-maj2 cmin1-to-cmaj6 wr-to-cmin1)
+;  call-o wr maj3 pmaj3 (sentence cmaj6-to-maj3 cmin1-to-cmaj6 wr-to-cmin1)
+;  call-o wr maj4 pmaj4 (sentence cmaj6-to-maj4 cmin1-to-cmaj6 wr-to-cmin1)
+;  call-o wr maj5 pmaj5 (sentence cmaj6-to-maj5 cmin1-to-cmaj6 wr-to-cmin1)
+
+
+  call-o wrmajtot maj1 pmaj1 (sentence wrmaj-to-maj1)
+  call-o wrmajtot maj2 pmaj2 (sentence wrmaj-to-maj2)
+  call-o wrmajtot maj3 pmaj3 (sentence wrmaj-to-maj3)
+  call-o wrmajtot maj4 pmaj4 (sentence wrmaj-to-maj4)
+  call-o wrmajtot maj5 pmaj5 (sentence wrmaj-to-maj5)
+  call-o wrmajtot maj6 pmaj6 (sentence wrmaj-to-maj6)
+  call-o wrmajtot maj7 pmaj7 (sentence wrmaj-to-maj7)
+  call-o wrmajtot maj8 pmaj8 (sentence wrmaj-to-maj8)
+  call-o wrmajtot maj9 pmaj9 (sentence wrmaj-to-maj9)
+  call-o wrmajtot maj10 pmaj10 (sentence wrmaj-to-maj10)
+  call-o wrmajtot maj11 pmaj11 (sentence wrmaj-to-maj11)
+  call-o wrmajtot maj12 pmaj12 (sentence wrmaj-to-maj12)
+  call-o wrmajtot maj12a pmaj12a (sentence wrmaj-to-maj12a)
+  call-o wrmajtot maj14 pmaj14 (sentence wrmaj-to-maj14)
+  call-o wrmajtot maj15 pmaj15 (sentence wrmaj-to-maj15)
+
+  call-o cmaj6 maj1 pmaj1 cmaj6-to-maj1
+  call-o cmaj6 maj2 pmaj2 cmaj6-to-maj2
+  call-o cmaj6 maj3 pmaj3 cmaj6-to-maj3
+  call-o cmaj6 maj4 pmaj4 cmaj6-to-maj4
+  call-o cmaj6 maj5 pmaj5 cmaj6-to-maj5
+  call-o cmaj6 maj6 pmaj6 cmaj6-to-maj6
+  call-o cmaj6 maj7 pmaj7 cmaj6-to-maj7
+  call-o cmaj6 maj8 pmaj8 cmaj6-to-maj8
+  call-o cmaj6 maj9 pmaj9 cmaj6-to-maj9
+  call-o cmaj6 maj10 pmaj10 cmaj6-to-maj10
+  call-o cmaj6 maj11 pmaj11 cmaj6-to-maj11
+  call-o cmaj6 maj12 pmaj12 cmaj6-to-maj12
+  call-o cmaj6 maj12a pmaj12a cmaj6-to-maj12a
+  call-o cmaj6 maj14 pmaj14 cmaj6-to-maj14
+  call-o cmaj6 maj15 pmaj15 cmaj6-to-maj15
+
+  ask patients-on cmaj6 [
+    if wait-time > 5 and target-list = 0 [maj-wait]
+  ]
+
+  ;**RESUS**
+  call-o dr1 r1 pr1 dr1-to-r1
+  call-o dr1 r2 pr2 dr1-to-r2
+  call-o dr1 r3 pr3 dr1-to-r3
+  call-o dr1 r4 pr4 dr1-to-r4
+
+  ask patients-on dr1 [
+    if (wait-time > 5) and (triage = 0) and (target-list = 0) [
+      set triage 1
+    let resus-patients patients-on rtot
+      let untargeted-patients resus-patients with [target-list = 0]
+      set healthiest one-of untargeted-patients with-max [wait-time]
+      ask healthiest [
+        set target-list dr2-to-cmaj6
+        (ifelse
+          member? patch-here r1 [
+            ask pr1 [set occupancy 0]
+          ]
+          member? patch-here r2 [
+            ask pr2 [set occupancy 0]
+          ]
+          member? patch-here r3 [
+            ask pr3 [set occupancy 0]
+          ]
+          member? patch-here r4 [
+            ask pr4 [set occupancy 0]
+          ])
+      ]
+    ]
+  ]
+
+
+  ;**CDU**
+  ;**CDU**
+  call-cdu cmaj4 cdu1 pcdu1 cmaj4-to-cdu1
+  call-cdu cmaj4 cdu2 pcdu2 cmaj4-to-cdu2
+  call-cdu cmaj4 maj15 pmaj15 cmaj4-to-maj15
+  call-cdu cmaj4 maj14 pmaj14 cmaj4-to-maj14
+  call-cdu cmaj4 maj12a pmaj12a cmaj4-to-maj12a
+  call-cdu cmaj4 maj12 pmaj12 cmaj4-to-maj12
+  call-cdu cmaj4 maj11 pmaj11 cmaj4-to-maj11
+  call-cdu cmaj4 maj10 pmaj10 cmaj4-to-maj10
+  call-cdu cmaj4 maj9 pmaj9 cmaj4-to-maj9
+  call-cdu cmaj4 maj8 pmaj8 cmaj4-to-maj8
+  call-cdu cmaj4 maj7 pmaj7 cmaj4-to-maj7
+  call-cdu cmaj4 maj6 pmaj6 cmaj4-to-maj6
+  call-cdu cmaj4 maj5 pmaj5 cmaj4-to-maj5
+  call-cdu cmaj4 maj4 pmaj4 cmaj4-to-maj4
+  call-cdu cmaj4 maj3 pmaj3 cmaj4-to-maj3
+  call-cdu cmaj4 maj2 pmaj2 cmaj4-to-maj2
+  call-cdu cmaj4 maj1 pmaj1 cmaj4-to-maj1
+  ask patients-on cmaj4 [
+    if  target-list = 0 and wait-time > 5 [ full-cdu]
+  ]
+end
+
+to leave-after-time
+  ;leave a room after some time, in this form:
+  ;leave STARTROOM MAXPATCH TIME routes list1 prob1 list2 prob2 list3 prob3
+
+  ;**TRIAGE**
+  ;urgency order 5 4 3 2 1
+  leave-tr tr1 ptr1 wait-triage 5 tr1-to-dr1 4 tr1-to-cmaj6 3 routes tr1-to-cmaj6 prio3-maj tr1-to-wr prio3-utc  0 0 0 0 2 tr1-to-wr 1 routes (sentence wr-to-exit tr1-to-wr) prio1-exit tr1-to-wr prio1-gp 0 0 0 0
+  leave-tr tr2 ptr2 wait-triage 5 tr2-to-dr1 4 tr2-to-cmaj6 3 routes tr2-to-cmaj6 prio3-maj tr2-to-wr prio3-utc  0 0 0 0 2 tr2-to-wr 1 routes (sentence wr-to-exit tr2-to-wr) prio1-exit tr2-to-wr prio1-gp 0 0 0 0
+  leave-tr tr3 ptr3 wait-triage 5 tr3-to-dr1 4 tr3-to-cmaj6 3 routes tr3-to-cmaj6 prio3-maj tr3-to-wr prio3-utc  0 0 0 0 2 tr3-to-wr 1 routes (sentence wr-to-exit tr3-to-wr) prio1-exit tr3-to-wr prio1-gp 0 0 0 0
+  leave-tr tr4 ptr4 wait-triage 5 tr4-to-dr1 4 tr4-to-cmaj6 3 routes tr4-to-cmaj6 prio3-maj tr4-to-wr prio3-utc  0 0 0 0 2 tr4-to-wr 1 routes (sentence wr-to-exit tr4-to-wr) prio1-exit tr4-to-wr prio1-gp 0 0 0 0
+  leave-tr tr5 ptr5 wait-triage 5 tr5-to-dr1 4 tr5-to-cmaj6 3 routes tr5-to-cmaj6 prio3-maj tr5-to-wr prio3-utc  0 0 0 0 2 tr5-to-wr 1 routes (sentence wr-to-exit tr5-to-wr) prio1-exit tr5-to-wr prio1-gp 0 0 0 0
+
+  ;GP
+  leave-utc gp pgp wait-gp (sentence wr-to-exit gp-to-wr)
+
+  ;**MINORS**
+  leave-utc utc1 putc1 wait-utc routes (sentence cmin1-to-wr utc1-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc1-to-cmin1) utc-imag (sentence cmin1-to-exit utc1-to-cmin1) utc-exit 0 0
+  leave-utc utc2 putc2 wait-utc routes (sentence cmin1-to-wr utc2-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc2-to-cmin1) utc-imag (sentence cmin1-to-exit utc2-to-cmin1) utc-exit 0 0
+  leave-utc utc3 putc3 wait-utc routes (sentence cmin1-to-wr utc3-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc3-to-cmin1) utc-imag (sentence cmin1-to-exit utc3-to-cmin1) utc-exit 0 0
+  leave-utc utc4 putc4 wait-utc routes (sentence cmin1-to-wr utc4-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc4-to-cmin1) utc-imag (sentence cmin1-to-exit utc4-to-cmin1) utc-exit 0 0
+  leave-utc utc5 putc5 wait-utc routes (sentence cmin1-to-wr utc5-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc5-to-cmin1) utc-imag (sentence cmin1-to-exit utc5-to-cmin1) utc-exit 0 0
+  leave-utc utc6 putc6 wait-utc routes (sentence cmin1-to-wr utc6-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc6-to-cmin1) utc-imag (sentence cmin1-to-exit utc6-to-cmin1) utc-exit 0 0
+  leave-utc utc7 putc7 wait-utc routes (sentence cmin1-to-wr utc7-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc7-to-cmin1) utc-imag (sentence cmin1-to-exit utc7-to-cmin1) utc-exit 0 0
+  leave-utc utc8 putc8 wait-utc routes (sentence cmin1-to-wr utc8-to-cmin1) utc-wr (sentence cmin1-to-cmin7 utc8-to-cmin1) utc-imag (sentence cmin1-to-exit utc8-to-cmin1) utc-exit 0 0
+  leave-xr xr1 pxr1 wait-imag xr1-to-cmin1
+  leave-xr xr2 pxr2 wait-imag xr2-to-cmin1
+  leave-xr cat pcat wait-imag cat-to-cmin1
+  leave-xr us pus wait-imag us-to-cmin1
+
+
+;*MAJORS*
+  leave nmaj1 pmaj1 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj1-to-cmaj6) maj-exit maj1-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj1-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj1-to-cmaj6) maj-imag
+  leave nmaj2 pmaj2 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj2-to-cmaj6) maj-exit maj2-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj2-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj2-to-cmaj6) maj-imag
+  leave nmaj3 pmaj3 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj3-to-cmaj6) maj-exit maj3-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj3-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj3-to-cmaj6) maj-imag
+  leave nmaj4 pmaj4 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj4-to-cmaj6) maj-exit maj4-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj4-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj4-to-cmaj6) maj-imag
+  leave nmaj5 pmaj5 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj5-to-cmaj6) maj-exit maj5-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj5-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj5-to-cmaj6) maj-imag
+  leave nmaj6 pmaj6 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj6-to-cmaj6) maj-exit maj6-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj6-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj6-to-cmaj6) maj-imag
+  leave nmaj7 pmaj7 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj7-to-cmaj6) maj-exit maj7-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj7-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj7-to-cmaj6) maj-imag
+  leave nmaj8 pmaj8 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj8-to-cmaj6) maj-exit maj8-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj8-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj8-to-cmaj6) maj-imag
+  leave nmaj9 pmaj9 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj9-to-cmaj6) maj-exit maj9-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj9-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj9-to-cmaj6) maj-imag
+  leave nmaj10 pmaj10 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj10-to-cmaj6) maj-exit maj10-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj10-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj10-to-cmaj6) maj-imag
+  leave nmaj11 pmaj11 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj11-to-cmaj6) maj-exit maj11-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj11-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj11-to-cmaj6) maj-imag
+  leave nmaj12 pmaj12 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj12-to-cmaj6) maj-exit maj12-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj12-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj12-to-cmaj6) maj-imag
+  leave nmaj12a pmaj12a wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj12a-to-cmaj6) maj-exit maj12a-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj12a-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj12a-to-cmaj6) maj-imag
+  leave nmaj14 pmaj14 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj14-to-cmaj6) maj-exit maj14-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj14-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj14-to-cmaj6) maj-imag
+  leave nmaj15 pmaj15 wait-maj routes (sentence cmin1-to-exit cmaj6-to-cmin1 maj15-to-cmaj6) maj-exit maj15-to-cmaj4 maj-cdu (sentence cmin1-to-admit cmaj6-to-cmin1 maj15-to-cmaj6) maj-admit (sentence cmin1-to-cmin7 cmaj6-to-cmin1 maj15-to-cmaj6) maj-imag
+
+  ;*Resus*
+  leave r1 pr1 wait-resus (sentence cmin1-to-admit cmaj6-to-cmin1 dr2-to-cmaj6)
+  leave r2 pr2 wait-resus (sentence cmin1-to-admit cmaj6-to-cmin1 dr2-to-cmaj6)
+  leave r3 pr3 wait-resus (sentence cmin1-to-admit cmaj6-to-cmin1 dr2-to-cmaj6)
+  leave r4 pr4 wait-resus (sentence cmin1-to-admit cmaj6-to-cmin1 dr2-to-cmaj6)
+
+  ;*Majors Doctors*
+  leave-d maj1 pmaj1 doc-wait-maj maj1-to-majmain
+  leave-d maj2 pmaj2 doc-wait-maj maj2-to-majmain
+  leave-d maj3 pmaj3 doc-wait-maj maj3-to-majmain
+  leave-d maj4 pmaj4 doc-wait-maj maj4-to-majmain
+  leave-d maj5 pmaj5 doc-wait-maj maj5-to-majmain
+  leave-d maj6 pmaj6 doc-wait-maj maj6-to-majmain
+  leave-d maj7 pmaj7 doc-wait-maj maj7-to-majmain
+  leave-d maj8 pmaj8 doc-wait-maj maj8-to-majmain
+  leave-d maj9 pmaj9 doc-wait-maj maj9-to-majmain
+  leave-d maj10 pmaj10 doc-wait-maj maj10-to-majmain
+  leave-d maj11 pmaj11 doc-wait-maj maj11-to-majmain
+  leave-d maj12 pmaj12 doc-wait-maj maj12-to-majmain
+  leave-d maj12a pmaj12a doc-wait-maj maj12a-to-majmain
+  leave-d maj14 pmaj14 doc-wait-maj maj14-to-majmain
+  leave-d maj15 pmaj15 doc-wait-maj maj15-to-majmain
+  ;*Resus*
+  leave-d r1 pr1 doc-wait-resus r1-to-majmain
+  leave-d r2 pr2 doc-wait-resus r2-to-majmain
+  leave-d r3 pr3 doc-wait-resus r3-to-majmain
+  leave-d r4 pr4 doc-wait-resus r4-to-majmain
+
+  ;*CDU*
+leave-cdu cdu1 pcdu1 wait-cdu routes (sentence cmin1-to-exit cmaj6-to-cmin1 cdu1-to-cmaj6) cdu-exit cdu1-to-ambulatory cdu-amb (sentence cmin1-to-admit cmaj6-to-cmin1 cdu1-to-cmaj6) cdu-admit 0 0
+leave-cdu cdu2 pcdu2 wait-cdu routes (sentence cmin1-to-exit cmaj6-to-cmin1 cdu2-to-cmaj6) cdu-exit cdu2-to-ambulatory cdu-amb (sentence cmin1-to-admit cmaj6-to-cmin1 cdu2-to-cmaj6) cdu-admit 0 0
+leave-cdu maj15 pmaj15 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj15-to-cmaj6)
+leave-cdu maj14 pmaj14 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj14-to-cmaj6)
+leave-cdu maj12a pmaj12a wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj12a-to-cmaj6)
+leave-cdu maj12 pmaj12 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj12-to-cmaj6)
+leave-cdu maj11 pmaj11 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj11-to-cmaj6)
+leave-cdu maj10 pmaj10 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj10-to-cmaj6)
+leave-cdu maj9 pmaj9 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj9-to-cmaj6)
+leave-cdu maj8 pmaj8 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj8-to-cmaj6)
+leave-cdu maj7 pmaj7 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj7-to-cmaj6)
+leave-cdu maj6 pmaj6 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj6-to-cmaj6)
+leave-cdu maj5 pmaj5 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj5-to-cmaj6)
+leave-cdu maj4 pmaj4 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj4-to-cmaj6)
+leave-cdu maj3 pmaj3 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj3-to-cmaj6)
+leave-cdu maj2 pmaj2 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj2-to-cmaj6)
+leave-cdu maj1 pmaj1 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 maj1-to-cmaj6)
+leave-cdu stretcher1 pstretcher1 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 stretcher1-to-cmaj6)
+leave-cdu stretcher2 pstretcher2 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 stretcher2-to-cmaj6)
+leave-cdu stretcher3 pstretcher3 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 cmaj4-to-cmaj6 stretcher3-to-cmaj4)
+leave-cdu stretcher4 pstretcher4 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 cmaj4-to-cmaj6 stretcher4-to-cmaj4)
+leave-cdu stretcher5 pstretcher5 wait-cdu (sentence cmin1-to-exit cmaj6-to-cmin1 stretcher5-to-cmaj6)
+end
+
+to update-list
+ if counter = -1 [
+    set target-list 0
+    set counter -2
+    if (member? patch-here all-wr = true) [
+      waiting-room
+    ]
+    if (member? patch-here majmain = true) [
+      move-to one-of majmaintot
+    ]
+    if (member? patch-here utcmain = true) [
+      move-to one-of utcmain
+    ]
+  ]
+end
+
+to waiting-room
+  let seat1 half-patch 669 347
+  let seat2 half-patch 700 347
+  let seat3 half-patch 669 317
+  let seat4 half-patch 700 317
+  let seat5 half-patch 669 287
+  let seat6 half-patch 700 287
+  let seat7 half-patch 669 257
+  let seat8 half-patch 700 257
+  let seat9 half-patch 669 227
+  let seat10 half-patch 700 227
+  let seat11 half-patch 669 197
+  let seat12 half-patch 700 197
+  let seat13 half-patch 669 167
+  let seat14 half-patch 700 167
+  let seat17 half-patch 625 245
+  let seat18 half-patch 625 223
+  let seat19 half-patch 625 202
+  let seat20 half-patch 625 180
+  let seat21 half-patch 685 115
+  let seat22 half-patch 710 115
+  let seat23 half-patch 735 115
+  let seat24 half-patch 760 115
+  let seat25 half-patch 785 115
+  let seat26 half-patch 810 115
+  let seat27 half-patch 675 410
+  let seat28 half-patch 703 410
+  let seat29 half-patch 732 410
+  let seat30 half-patch 760 410
+  let seat31 half-patch 760 381
+  let seat32 half-patch 760 352
+  let seat33 half-patch 760 323
+  let seat34 half-patch 760 293
+  let seat35 half-patch 760 264
+  let seat36 half-patch 760 235
+
+
+  (ifelse
+    any? patients-on seat1 = false [
+      move-to seat1
+    ]
+    any? patients-on seat2 = false [
+      move-to seat2
+    ]
+    any? patients-on seat3 = false [
+      move-to seat3
+    ]
+    any? patients-on seat4 = false [
+      move-to seat4
+    ]
+    any? patients-on seat5 = false [
+      move-to seat5
+    ]
+    any? patients-on seat6 = false [
+      move-to seat6
+    ]
+    any? patients-on seat7 = false [
+      move-to seat7
+    ]
+    any? patients-on seat8 = false [
+      move-to seat8
+    ]
+    any? patients-on seat9 = false [
+      move-to seat9
+    ]
+    any? patients-on seat10 = false [
+      move-to seat10
+    ]
+    any? patients-on seat11 = false [
+      move-to seat11
+    ]
+    any? patients-on seat12 = false [
+      move-to seat12
+    ]
+    any? patients-on seat13 = false [
+      move-to seat13
+    ]
+    any? patients-on seat14 = false [
+      move-to seat14
+    ]
+    any? patients-on seat17 = false [
+      move-to seat17
+    ]
+    any? patients-on seat18 = false [
+      move-to seat18
+    ]
+    any? patients-on seat19 = false [
+      move-to seat19
+    ]
+    any? patients-on seat20 = false [
+      move-to seat20
+    ]
+    any? patients-on seat21 = false [
+      move-to seat21
+    ]
+    any? patients-on seat22 = false [
+      move-to seat22
+    ]
+    any? patients-on seat23 = false [
+      move-to seat23
+    ]
+    any? patients-on seat24 = false [
+      move-to seat24
+    ]
+    any? patients-on seat25 = false [
+      move-to seat25
+    ]
+    any? patients-on seat26 = false [
+      move-to seat26
+    ]
+    any? patients-on seat27 = false [
+      move-to seat27
+    ]
+    any? patients-on seat28 = false [
+      move-to seat28
+    ]
+    any? patients-on seat29 = false [
+      move-to seat29
+    ]
+    any? patients-on seat30 = false [
+      move-to seat30
+    ]
+    any? patients-on seat31 = false [
+      move-to seat31
+    ]
+    any? patients-on seat32 = false [
+      move-to seat32
+    ]
+    any? patients-on seat33 = false [
+      move-to seat33
+    ]
+    any? patients-on seat34 = false [
+      move-to seat34
+    ]
+    any? patients-on seat35 = false [
+      move-to seat35
+    ]
+    any? patients-on seat36 = false [
+      move-to seat36
+    ]
+    any? patients-on seat36 = true
+    [
+      move-to one-of wr-stand-up
+  ])
+end
+
+to maj-wait
+  let seat1 half-patch 476 825
+  let seat2 half-patch 476 811
+  let seat3 half-patch 476 797
+  let seat4 half-patch 476 783
+  let seat5 half-patch 476 769
+  let seat6 half-patch 476 755
+  let seat7 half-patch 476 740
+  (ifelse
+    any? patients-on seat1 = false [
+      move-to seat1
+    ]
+    any? patients-on seat2 = false [
+      move-to seat2
+    ]
+    any? patients-on seat3 = false [
+      move-to seat3
+    ]
+    any? patients-on seat4 = false [
+      move-to seat4
+    ]
+    any? patients-on seat5 = false [
+      move-to seat5
+    ]
+    any? patients-on seat6 = false [
+      move-to seat6
+    ]
+    any? patients-on seat7 = false [
+      move-to seat7
+    ]
+    any? patients-on seat7 = true [
+      move-to one-of wrmaj2
+    ]
+  )
+end
+
+to new-patients
+  ;arrival rate
+  if random (tick-con * 60) <= arrival-rate [
+    ask n-of 1 start [
+      sprout-patients 1 [
+        set shape "dot"
+        set color yellow
+        set counter -2
+        set size 11
+        set urgency routes-urg priority-1 priority-2 priority-3 priority-4 priority-5
+        set triage 0
+        set treat? 0
+      ]
+    ]
+  ]
+end
+
+to discharge
+  ; delete the patient once he reaches the exit.
+  if any? patients-on exit [
+    ask patients-on exit [
+     if target-list = 0 [
+       ;this order matters, if die is first, it doesnt count the finished-patient
+       set finished-patients finished-patients + 1
+        if ticks > (240 * tick-con) [set stay-time fput round (total-stay / tick-con) stay-time]
+        if ticks > (240 * tick-con) [set stay-timeNA fput round (total-stay / tick-con) stay-timeNA]
+        if ticks > (240 * tick-con) [set urg-list fput (word "URG = " urgency " CDU = " cdu-patient) urg-list]
+        if ticks > (240 * tick-con) [set wr-wait fput round (tr-wait / tick-con) wr-wait]
+        if ticks > (240 * tick-con) [set time-to-treatment fput round (ttt / tick-con) time-to-treatment]
+       die
+      ]
+    ]
+  ]
+  if any? patients-on admit [
+    ask patients-on admit [
+      if target-list = 0 [
+        set finished-patients finished-patients + 1
+;        if cdu-patient = 0 [
+        if ticks > (240 * tick-con) [set stay-time fput round (total-stay / tick-con) stay-time]
+        if ticks > (240 * tick-con) [set stay-timeA fput round (total-stay / tick-con) stay-timeA]
+        if ticks > (240 * tick-con) [set urg-list fput (word "URG = " urgency " CDU = " cdu-patient) urg-list]
+        if ticks > (240 * tick-con) [set wr-wait fput round (tr-wait / tick-con) wr-wait]
+        if ticks > (240 * tick-con) [set time-to-treatment fput round (ttt / tick-con) time-to-treatment]
+  ;      ]
+        die
+      ]
+    ]
+  ]
+  if any? patients-on ambulatory [
+    ask patients-on ambulatory [
+      if target-list = 0 [
+        set finished-patients finished-patients + 1
+  ;      if cdu-patient = 0 [
+        if ticks > (240 * tick-con) [set stay-time fput round (total-stay / tick-con) stay-time]
+        if ticks > (240 * tick-con) [set stay-timeA fput round (total-stay / tick-con) stay-timeA]
+        if ticks > (240 * tick-con) [set urg-list fput (word "URG = " urgency " CDU = " cdu-patient) urg-list]
+        if ticks > (240 * tick-con) [set wr-wait fput round (tr-wait / tick-con) wr-wait]
+        if ticks > (240 * tick-con) [set time-to-treatment fput round (ttt / tick-con) time-to-treatment]
+;        ]
+       die
+      ]
+    ]
+  ]
+  if count patients > 0 [
+  let loops-patients max [loops] of patients
+  set max-loops max list max-loops loops-patients
+  ]
+end
+
+to create-lists
+;*** WALK IN Entrances***
+;Walk-in to waiting room
+  set wr-to-start (list start dwalk-in1 dwalk-in2 crec1 crec2 wr)
+  set start-to-wr reverse wr-to-start
+  set crec1-to-start (list start dwalk-in1 dwalk-in2 crec1)
+  set start-to-crec1 reverse crec1-to-start
+  set crec1-to-dr1 (list )
+  set crec1-to-wr (list wr crec2 crec1)
+  set crec1-to-dr1 (list dr1 ct3 ct1 crec3 crec2 crec1)
+
+  set wr-to-exit (list exit dwalk-in1 dwalk-in2 crec1 crec2 wr)
+  set exit-to-wr reverse wr-to-exit
+
+  ;cmin1 to start
+  set cmin1-to-exit (list exit dwalk-in1 dwalk-in2 crec1 crec2 crec3 crec4 cmin1)
+  set exit-to-cmin1 reverse cmin1-to-exit
+
+  ;waiting room to triage
+  set tr1-to-wr (list wr crec3 ct5 dtr1 tr1)
+  set tr2-to-wr (list wr crec3 ct5 dtr2 tr2)
+  set tr3-to-wr (list wr crec3 ct5 dtr3 tr3)
+  set tr4-to-wr (list wr crec3 ct5 dtr4 tr4)
+  set tr5-to-wr (list wr crec3 ct5 dtr5 tr5)
+
+  set wr-to-tr1 reverse tr1-to-wr
+  set wr-to-tr2 reverse tr2-to-wr
+  set wr-to-tr3 reverse tr3-to-wr
+  set wr-to-tr4 reverse tr4-to-wr
+  set wr-to-tr5 reverse tr5-to-wr
+
+  ;waiting room to cmin1
+  set cmin1-to-wr (list wr1 crec5 cmin1)
+  set wr-to-cmin1 reverse cmin1-to-wr
+
+  ;waiting room to gp
+  set wr-to-gp (list gp dgp wr)
+  set gp-to-wr reverse wr-to-gp
+
+  ;Cmin to cmin7 XR US and CAT
+  set XR1-to-cmin1 (list cmin1 cmin3 cmin4 dxr1 xr1)
+  set XR2-to-cmin1 (list cmin1 cmin3 dxr2 xr2)
+  set CAT-to-cmin1 (list cmin1 cmin3 cmin4 dCAT CAT)
+  set US-to-cmin1 (list cmin1 cmin3 cmin4 cmin5 cmin6 dUS US)
+
+  set cmin1-to-XR1 reverse XR1-to-cmin1
+  set cmin1-to-XR2 reverse XR2-to-cmin1
+  set cmin1-to-CAT reverse CAT-to-cmin1
+  set cmin1-to-US reverse US-to-cmin1
+
+  set cmin7-to-cmin1 (list cmin1 cmin3 cmin4 cmin7)
+  set XR1-to-cmin7 (list cmin7 cmin4 dxr1 xr1)
+  set XR2-to-cmin7 (list cmin7 cmin4 dxr2 xr2)
+  set CAT-to-cmin7 (list cmin7 cmin4 dCAT CAT)
+  set US-to-cmin7 (list cmin7 cmin4 cmin5 cmin6 dUS US)
+
+  set cmin1-to-cmin7 reverse cmin7-to-cmin1
+  set cmin7-to-XR1 reverse XR1-to-cmin7
+  set cmin7-to-XR2 reverse XR2-to-cmin7
+  set cmin7-to-CAT reverse CAT-to-cmin7
+  set cmin7-to-US reverse US-to-cmin7
+
+  ;Cmin to utc
+
+  set cmin1-to-utc1 (list utc1 dutc1 cmaj6 cmin1)
+  set cmin1-to-utc2 (list utc2 dutc2 cmaj6 cmin1)
+  set cmin1-to-utc3 (list utc3 dutc3 cmin1)
+  set cmin1-to-utc4 (list utc4 dutc4 cmin1)
+  set cmin1-to-utc5 (list utc5 dutc5 cmin1)
+  set cmin1-to-utc6 (list utc6 dutc6 cmin1)
+  set cmin1-to-utc7 (list utc7 dutc7 cmin2 cmin1)
+  set cmin1-to-utc8 (list utc8 dutc8 cmin2 cmin1)
+
+  set utc1-to-cmin1 reverse cmin1-to-utc1
+  set utc2-to-cmin1 reverse cmin1-to-utc2
+  set utc3-to-cmin1 reverse cmin1-to-utc3
+  set utc4-to-cmin1 reverse cmin1-to-utc4
+  set utc5-to-cmin1 reverse cmin1-to-utc5
+  set utc6-to-cmin1 reverse cmin1-to-utc6
+  set utc7-to-cmin1 reverse cmin1-to-utc7
+  set utc8-to-cmin1 reverse cmin1-to-utc8
+
+  ;nurses utc to waiting room
+  set utcmain-to-crec5 (list crec5 cmin1 cmin2 cmin2a utcmain)
+  set crec5-to-utcmain reverse utcmain-to-crec5
+
+  set cmin1-to-utcmain (list utcmain cmin2a cmin2 cmin1)
+  set utcmain-to-cmin1 reverse cmin1-to-utcmain
+
+  ;cmin1 to cmaj6 & admittance to hospital
+  set cmin1-to-cmaj6 (list cmaj6 cmin1)
+  set cmaj6-to-cmin1 reverse cmin1-to-cmaj6
+  set cmin1-to-admit (list admit cmin3 cmin1)
+
+
+;***AMBULANCE ENTRANCES***
+  ;Start to Ambulance Entrance
+  set ambulance-to-start (list start dambulance1 dambulance2)
+  set start-to-ambulance reverse ambulance-to-start
+
+  set cmaj6-to-ambulance (list dambulance2 ct1 ct3 ct4 cmaj6)
+  set ambulance-to-cmaj6 reverse cmaj6-to-ambulance
+
+
+  ;Ambulance to Triage & reverse
+  set tr1-to-ambulance (list dambulance1 dambulance2 ct1 dtr1 tr1)
+  set tr2-to-ambulance (list dambulance1 dambulance2 ct1 dtr2 tr2)
+  set tr3-to-ambulance (list dambulance1 dambulance2 ct1 dtr3 tr3)
+  set tr4-to-ambulance (list dambulance1 dambulance2 ct1 dtr4 tr4)
+  set tr5-to-ambulance (list dambulance1 dambulance2 ct1 dtr5 tr5)
+  set ambulance-to-tr1 reverse tr1-to-ambulance
+  set ambulance-to-tr2 reverse tr2-to-ambulance
+  set ambulance-to-tr3 reverse tr3-to-ambulance
+  set ambulance-to-tr4 reverse tr4-to-ambulance
+  set ambulance-to-tr5 reverse tr5-to-ambulance
+
+;Ambulance to Resus & reverse
+  set ambulance-to-r1 (list r1 dr1 dambulance2 dambulance1)
+  set ambulance-to-r2 (list r2 dr1 dambulance2 dambulance1)
+  set ambulance-to-r3 (list r3 dr1 dambulance2 dambulance1)
+  set ambulance-to-r4 (list r4 dr1 dambulance2 dambulance1)
+  set r1-to-ambulance reverse ambulance-to-r1
+  set r2-to-ambulance reverse ambulance-to-r2
+  set r3-to-ambulance reverse ambulance-to-r3
+  set r4-to-ambulance reverse ambulance-to-r4
+
+  set ambulance-to-dr1 (list dr1 dambulance2)
+  set dr1-to-ambulance reverse ambulance-to-r1
+  set ambulance-to-wr (list wr crec3 ct1 dambulance2)
+  set wr-to-ambulance reverse ambulance-to-wr
+
+ ;**RESUS MOVEMENT **
+  set dr1-to-r1 (list r1 dr1)
+  set dr1-to-r2 (list r2 dr1)
+  set dr1-to-r3 (list r3 dr1)
+  set dr1-to-r4 (list r4 dr1)
+  set r1-to-dr1 reverse dr1-to-r1
+  set r2-to-dr1 reverse dr1-to-r2
+  set r3-to-dr1 reverse dr1-to-r3
+  set r4-to-dr1 reverse dr1-to-r4
+
+  set dr2-to-cmaj6 (list cmaj6 cmaj1 dr2 )
+  set cmaj6-to-dr2 reverse dr2-to-cmaj6
+
+
+;***TRIAGE TO ...***
+;Triage to cmaj6 & reverse
+  set cmaj6-to-tr1 (list tr1 dtr1 ct1 ct3 ct4 cmaj6)
+  set cmaj6-to-tr2 (list tr2 dtr2 ct1 ct3 ct4 cmaj6)
+  set cmaj6-to-tr3 (list tr3 dtr3 ct1 ct3 ct4 cmaj6)
+  set cmaj6-to-tr4 (list tr4 dtr4 ct1 ct3 ct4 cmaj6)
+  set cmaj6-to-tr5 (list tr5 dtr5 ct1 ct3 ct4 cmaj6)
+  set tr1-to-cmaj6 reverse cmaj6-to-tr1
+  set tr2-to-cmaj6 reverse cmaj6-to-tr2
+  set tr3-to-cmaj6 reverse cmaj6-to-tr3
+  set tr4-to-cmaj6 reverse cmaj6-to-tr4
+  set tr5-to-cmaj6 reverse cmaj6-to-tr5
+
+;Triage to dr1 and reverse
+  set dr1-to-tr1 (list tr1 dtr1 ct1 ct3 dr1)
+  set dr1-to-tr2 (list tr2 dtr2 ct1 ct3 dr1)
+  set dr1-to-tr3 (list tr3 dtr3 ct1 ct3 dr1)
+  set dr1-to-tr4 (list tr4 dtr4 ct1 ct3 dr1)
+  set dr1-to-tr5 (list tr5 dtr5 ct1 ct3 dr1)
+  set tr1-to-dr1 reverse dr1-to-tr1
+  set tr2-to-dr1 reverse dr1-to-tr2
+  set tr3-to-dr1 reverse dr1-to-tr3
+  set tr4-to-dr1 reverse dr1-to-tr4
+  set tr5-to-dr1 reverse dr1-to-tr5
+
+  ; For nurses to move move from Majors to Triage
+  set majmain-to-ct1 (list ct1 ct3 ct4 cmaj6 dmajmainr majmain)
+  set ct1-to-majmain reverse majmain-to-ct1
+
+  ;***MAJORS MOVEMENT***
+;cmaj6 to all major rooms & reverse
+  set cmaj6-to-wrmaj (list wrmaj cmaj6)
+  set maj1-to-cmaj6 (list cmaj6 cmaj1 dmaj1 maj1)
+  set maj2-to-cmaj6 (list cmaj6 cmaj1 dmaj2 maj2)
+  set maj3-to-cmaj6 (list cmaj6 dmaj3 maj3)
+  set maj4-to-cmaj6 (list cmaj6 cmaj1 cmaj2 dmaj4 maj4)
+  set maj5-to-cmaj6 (list cmaj6 cmaj1 cmaj2 dmaj5 maj5)
+  set maj6-to-cmaj6 (list cmaj6 cmaj1 cmaj2 dmaj6 maj6)
+  set maj7-to-cmaj6 (list cmaj6 cmaj1 cmaj2 dmaj7 maj7)
+  set maj8-to-cmaj6 (list cmaj6 cmaj1 cmaj2 cmaj3 dmaj8 maj8)
+  set maj9-to-cmaj6 (list cmaj6 cmaj1 cmaj2 cmaj3 dmaj9 maj9)
+  set maj10-to-cmaj6 (list cmaj6 cmaj5 cmaj4 cmaj3 dmaj10 maj10)
+  set maj11-to-cmaj6 (list cmaj6 cmaj5 dmaj11 maj11)
+  set maj12-to-cmaj6 (list cmaj6 cmaj5 cmaj4 dmaj12 maj12)
+  set maj12a-to-cmaj6 (list cmaj6 cmaj5 cmaj4 dmaj12a maj12a)
+  set maj14-to-cmaj6 (list cmaj6 cmaj5 dmaj14 maj14)
+  set maj15-to-cmaj6 (list cmaj6 cmaj5 dmaj15 maj15)
+  set cmaj6-to-maj1 reverse maj1-to-cmaj6
+  set cmaj6-to-maj2 reverse maj2-to-cmaj6
+  set cmaj6-to-maj3 reverse maj3-to-cmaj6
+  set cmaj6-to-maj4 reverse maj4-to-cmaj6
+  set cmaj6-to-maj5 reverse maj5-to-cmaj6
+  set cmaj6-to-maj6 reverse maj6-to-cmaj6
+  set cmaj6-to-maj7 reverse maj7-to-cmaj6
+  set cmaj6-to-maj8 reverse maj8-to-cmaj6
+  set cmaj6-to-maj9 reverse maj9-to-cmaj6
+  set cmaj6-to-maj10 reverse maj10-to-cmaj6
+  set cmaj6-to-maj11 reverse maj11-to-cmaj6
+  set cmaj6-to-maj12 reverse maj12-to-cmaj6
+  set cmaj6-to-maj12a reverse maj12a-to-cmaj6
+  set cmaj6-to-maj14 reverse maj14-to-cmaj6
+  set cmaj6-to-maj15 reverse maj15-to-cmaj6
+
+  ; Majors Main Staff Room to All rooms and reverse
+  set majmain-to-maj1 (list maj1 dmaj1 cmaj1 cmaj2 dmajmainl majmain)
+  set majmain-to-maj2 (list maj2 dmaj2 cmaj2 dmajmainl majmain)
+  set majmain-to-maj3 (list maj3 dmaj3 cmaj2 dmajmainl majmain)
+  set majmain-to-maj4 (list maj4 dmaj4 dmajmainl majmain)
+  set majmain-to-maj5 (list maj5 dmaj5 dmajmainl majmain)
+  set majmain-to-maj6 (list maj6 dmaj6 cmaj2 dmajmainl majmain)
+  set majmain-to-maj7 (list maj7 dmaj7 cmaj2 dmajmainl majmain)
+  set majmain-to-maj8 (list maj8 dmaj8 cmaj3 cmaj2 dmajmainl majmain)
+  set majmain-to-maj9 (list maj9 dmaj9 cmaj3 cmaj2 dmajmainl majmain)
+  set majmain-to-maj10 (list maj10 dmaj10 cmaj3 cmaj2 dmajmainl majmain)
+  set majmain-to-maj11 (list maj11 dmaj11 cmaj4 cmaj5 dmajmainr majmain)
+  set majmain-to-maj12 (list maj12 dmaj12 cmaj5 dmajmainr majmain)
+  set majmain-to-maj12a (list maj12a dmaj12a cmaj5 dmajmainr majmain)
+  set majmain-to-maj14 (list maj14 dmaj14 dmajmainr majmain)
+  set majmain-to-maj15 (list maj15 dmaj15 dmajmainr majmain)
+
+  set maj1-to-majmain reverse majmain-to-maj1
+  set maj2-to-majmain reverse majmain-to-maj2
+  set maj3-to-majmain reverse majmain-to-maj3
+  set maj4-to-majmain reverse majmain-to-maj4
+  set maj5-to-majmain reverse majmain-to-maj5
+  set maj6-to-majmain reverse majmain-to-maj6
+  set maj7-to-majmain reverse majmain-to-maj7
+  set maj8-to-majmain reverse majmain-to-maj8
+  set maj9-to-majmain reverse majmain-to-maj9
+  set maj10-to-majmain reverse majmain-to-maj10
+  set maj11-to-majmain reverse majmain-to-maj11
+  set maj12-to-majmain reverse majmain-to-maj12
+  set maj12a-to-majmain reverse majmain-to-maj12a
+  set maj14-to-majmain reverse majmain-to-maj14
+  set maj15-to-majmain reverse majmain-to-maj15
+
+  ;Resus
+  set majmain-to-r1 (list r1 dr2 cmaj1 cmaj2 dmajmainl majmain)
+  set majmain-to-r2 (list r2 dr2 cmaj1 cmaj2 dmajmainl majmain)
+  set majmain-to-r3 (list r3 dr2 cmaj1 cmaj2 dmajmainl majmain)
+  set majmain-to-r4 (list r4 dr2 cmaj1 cmaj2 dmajmainl majmain)
+  set r1-to-majmain reverse majmain-to-r1
+  set r2-to-majmain reverse majmain-to-r2
+  set r3-to-majmain reverse majmain-to-r3
+  set r4-to-majmain reverse majmain-to-r4
+
+;cmaj6 to cdu & reverse
+  set cdu1-to-cmaj6 (list cmaj6 cmaj5 cmaj4 ccdu1 dcdu1 cdu1)
+  set cdu2-to-cmaj6 (list cmaj6 cmaj5 cmaj4 ccdu1 ccdu2 dcdu2 cdu2)
+  set cmaj6-to-cdu1 reverse cdu1-to-cmaj6
+  set cmaj6-to-cdu2 reverse cdu2-to-cmaj6
+  set stretcher1-to-cmaj6 (list cmaj6 cmaj1 stretcher1)
+  set stretcher2-to-cmaj6 (list cmaj6 cmaj1 cmaj2 stretcher2)
+  set stretcher5-to-cmaj6 (list cmaj6 stretcher5)
+
+;cmaj4 to all majors rooms & reverse
+  set maj1-to-cmaj4 (list cmaj4 cmaj5 cmaj6 cmaj1 dmaj1 maj1)
+  set maj2-to-cmaj4 (list cmaj4 cmaj5 cmaj6 cmaj1 dmaj2 maj2)
+  set maj3-to-cmaj4 (list cmaj4 cmaj4 cmaj3 cmaj2 dmaj3 maj3)
+  set maj4-to-cmaj4 (list cmaj4 cmaj3 cmaj2 dmaj4 maj4)
+  set maj5-to-cmaj4 (list cmaj4 cmaj3 dmaj5 maj5)
+  set maj6-to-cmaj4 (list cmaj4 cmaj3 dmaj6 maj6)
+  set maj7-to-cmaj4 (list cmaj4 cmaj3 dmaj7 maj7)
+  set maj8-to-cmaj4 (list cmaj4 cmaj3 dmaj8 maj8)
+  set maj9-to-cmaj4 (list cmaj4 cmaj3 dmaj9 maj9)
+  set maj10-to-cmaj4 (list cmaj4 cmaj3 dmaj10 maj10)
+  set maj11-to-cmaj4 (list cmaj4 dmaj11 maj11)
+  set maj12-to-cmaj4 (list cmaj4 dmaj12 maj12)
+  set maj12a-to-cmaj4 (list cmaj4 dmaj12a maj12a)
+  set maj14-to-cmaj4 (list cmaj4 cmaj5 dmaj14 maj14)
+  set maj15-to-cmaj4 (list cmaj4 cmaj5 dmaj15 maj15)
+  set cmaj4-to-maj1 reverse maj1-to-cmaj4
+  set cmaj4-to-maj2 reverse maj2-to-cmaj4
+  set cmaj4-to-maj3 reverse maj3-to-cmaj4
+  set cmaj4-to-maj4 reverse maj4-to-cmaj4
+  set cmaj4-to-maj5 reverse maj5-to-cmaj4
+  set cmaj4-to-maj6 reverse maj6-to-cmaj4
+  set cmaj4-to-maj7 reverse maj7-to-cmaj4
+  set cmaj4-to-maj8 reverse maj8-to-cmaj4
+  set cmaj4-to-maj9 reverse maj9-to-cmaj4
+  set cmaj4-to-maj10 reverse maj10-to-cmaj4
+  set cmaj4-to-maj11 reverse maj11-to-cmaj4
+  set cmaj4-to-maj12 reverse maj12-to-cmaj4
+  set cmaj4-to-maj12a reverse maj12a-to-cmaj4
+  set cmaj4-to-maj14 reverse maj14-to-cmaj4
+  set cmaj4-to-maj15 reverse maj15-to-cmaj4
+
+
+;cmaj4 to cdu, ambulatory,  stretchers and cmaj6
+  set cdu1-to-cmaj4 (list cmaj4 ccdu1 dcdu1 cdu1)
+  set cdu2-to-cmaj4 (list cmaj4 ccdu1 ccdu2 dcdu2 cdu2)
+  set cmaj4-to-cdu1 reverse cdu1-to-cmaj4
+  set cmaj4-to-cdu2 reverse cdu2-to-cmaj4
+  set cmaj4-to-ccdu1 (list ccdu1 cmaj4)
+  set ccdu1-to-cmaj4 reverse cmaj4-to-ccdu1
+  set ccdu1-to-ambulatory (list ambulatory ccdu1 cdu1)
+  set cdu1-to-ambulatory (list ambulatory ccdu1 dcdu1 cdu1)
+  set cdu2-to-ambulatory (list ambulatory ccdu1 ccdu2 dcdu2 cdu2)
+  set cmaj4-to-cmaj6 (list cmaj6 cmaj5 cmaj4)
+  set cmaj6-to-cmaj4 reverse cmaj4-to-cmaj6
+  set cmaj4-to-stretcher3 (list stretcher3 cmaj4)
+  set cmaj4-to-stretcher4 (list stretcher4 cmaj4)
+  set stretcher3-to-cmaj4 reverse cmaj4-to-stretcher3
+  set stretcher4-to-cmaj4 reverse cmaj4-to-stretcher4
+
+
+;all majors to major waiting room
+  set wrmaj-to-maj1 (list maj1 dmaj1 cmaj1 cmaj6 wrmaj)
+  set wrmaj-to-maj2 (list maj2 dmaj2 cmaj1 cmaj6 wrmaj)
+  set wrmaj-to-maj3 (list maj3 dmaj3 cmaj1 cmaj6 wrmaj)
+  set wrmaj-to-maj4 (list maj4 dmaj4 cmaj1 cmaj6 wrmaj)
+  set wrmaj-to-maj5 (list maj5 dmaj5 cmaj3 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj6 (list maj6 dmaj6 cmaj3 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj7 (list maj7 dmaj7 cmaj3 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj8 (list maj8 dmaj8 cmaj3 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj9 (list maj9 dmaj9 cmaj3 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj10 (list maj10 dmaj10 cmaj3 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj11 (list maj11 dmaj11 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj12 (list maj12 dmaj12 cmaj4 cmaj5 wrmaj)
+  set wrmaj-to-maj12a (list maj12a dmaj12a cmaj5 wrmaj)
+  set wrmaj-to-maj14 (list maj14 dmaj14 cmaj5 wrmaj)
+  set wrmaj-to-maj15 (list maj15 dmaj15 wrmaj)
+  set maj1-to-wrmaj reverse wrmaj-to-maj1
+  set maj2-to-wrmaj reverse wrmaj-to-maj2
+  set maj3-to-wrmaj reverse wrmaj-to-maj3
+  set maj4-to-wrmaj reverse wrmaj-to-maj4
+  set maj5-to-wrmaj reverse wrmaj-to-maj5
+  set maj6-to-wrmaj reverse wrmaj-to-maj6
+  set maj7-to-wrmaj reverse wrmaj-to-maj7
+  set maj8-to-wrmaj reverse wrmaj-to-maj8
+  set maj9-to-wrmaj reverse wrmaj-to-maj9
+  set maj10-to-wrmaj reverse wrmaj-to-maj10
+  set maj11-to-wrmaj reverse wrmaj-to-maj11
+  set maj12-to-wrmaj reverse wrmaj-to-maj12
+  set maj12a-to-wrmaj reverse wrmaj-to-maj12a
+  set maj14-to-wrmaj reverse wrmaj-to-maj14
+  set maj15-to-wrmaj reverse wrmaj-to-maj15
+
+  set wrmaj-to-majmain (list majmain dmajmainr wrmaj)
+  set majmain-to-wrmaj reverse wrmaj-to-majmain
+end
+
+to define-mp
+  set pwr maxpatch wr
+  set pstart maxpatch start
+
+  set pwrmaj maxpatch wrmaj
+  set pgp maxpatch gp
+  set ptr1 maxpatch tr1
+  set ptr5 maxpatch tr5
+  set ptr4 maxpatch tr4
+  set ptr2 maxpatch tr2
+  set ptr3 maxpatch tr3
+
+  set pmaj1 maxpatch maj1
+  set pmaj2 maxpatch maj2
+  set pmaj3 maxpatch maj3
+  set pmaj4 maxpatch maj4
+  set pmaj5 maxpatch maj5
+  set pmaj6 maxpatch maj6
+  set pmaj7 maxpatch maj7
+  set pmaj8 maxpatch maj8
+  set pmaj9 maxpatch maj9
+  set pmaj10 maxpatch maj10
+  set pmaj11 maxpatch maj11
+  set pmaj12 maxpatch maj12
+  set pmaj12a maxpatch maj12a
+  set pmaj14 maxpatch maj14
+  set pmaj15 maxpatch maj15
+
+  set putc1 maxpatch utc1
+  set putc2 maxpatch utc2
+  set putc3 maxpatch utc3
+  set putc4 maxpatch utc4
+  set putc5 maxpatch utc5
+  set putc6 maxpatch utc6
+  set putc7 maxpatch utc7
+  set putc8 maxpatch utc8
+  set pcdu2 maxpatch cdu2
+  set pcdu1 maxpatch cdu1
+  set pstretcher1 maxpatch stretcher1
+  set pstretcher2 maxpatch stretcher2
+  set pstretcher3 maxpatch stretcher3
+  set pstretcher4 maxpatch stretcher4
+  set pstretcher5 maxpatch stretcher5
+
+  set pr1 maxpatch r1
+  set pr2 maxpatch r2
+  set pr3 maxpatch r3
+  set pr4 maxpatch r4
+
+  set pxr1 maxpatch xr1
+  set pxr2 maxpatch xr2
+  set pcat maxpatch cat
+  set pus maxpatch us
+end
+
+to define-areas
+ ;*****ROOMS*****
+  ;Start
+  set start area 693 842 6 13
+  set exit area 1032 1192 6 13
+
+  ;Majors
+  set wrmaj area 463 496 725 837
+  set wrmaj2 area 335 405 670 705
+  set wrmajtot (patch-set wrmaj wrmaj2)
+  set maj1 area 201 220 614 670
+  set maj2 area 201 220 676 732
+  set maj3 area 201 220 738 812
+  set maj4 area 201 220 820 894
+  set maj5 area 201 220 900 956
+  set maj6 area 201 220 962 1016
+  set maj7 area 201 220 1024 1060
+  set maj8 area 192 252 1180 1214
+  set maj9 area 258 310 1180 1214
+  set maj10 area 318 372 1180 1214
+  set maj11 area 380 440 1180 1214
+  set maj12 area 566 608 1044 1100
+  set maj12a area 566 608 984 1040
+  set maj14 area 566 586 904 978
+  set maj15 area 566 586 844 900
+  set majmain area 362 388 875 930
+  set majmaintot area 362 388 793 1003
+  set majtop area 202 584 839 1207
+  set majbot area 198 490 625 847
+  set majtot (patch-set majbot majtop)
+  set majors-rooms (patch-set maj1 maj2 maj3 maj4 maj5 maj6 maj7 maj8 maj9 maj10 maj11 maj12 maj12a maj14 maj15)
+  set all-majors (patch-set wrmajtot majors-rooms)
+
+
+  set nmaj1 area 201 260 614 670
+  set nmaj2 area 201 260 676 732
+  set nmaj3 area 201 260 738 812
+  set nmaj4 area 201 260 820 894
+  set nmaj5 area 201 260 900 956
+  set nmaj6 area 201 260 962 1016
+  set nmaj7 area 201 260 1024 1060
+  set nmaj8 area 192 252 1158 1214
+  set nmaj9 area 258 310 1158 1214
+  set nmaj10 area 318 372 1158 1214
+  set nmaj11 area 380 440 1158 1214
+  set nmaj12 area 526 608 1044 1100
+  set nmaj12a area 526 608 984 1040
+  set nmaj14 area 526 586 904 978
+  set nmaj15 area 526 586 844 900
+
+  ;triage
+  set wrmain area 657 711 149 356
+  set wrleft area 616 630 173 255
+  set wrbot area  684 810 108 125
+  set wrright area 749 768 231 403
+  set wrtop area 674 768 403 419
+  set wr (patch-set wrmain wrleft wrbot wrright wrtop)
+  set top-stand-up area 670 735 360 390
+  set corridor-stand-up area 725 745 155 355
+  set reception-stand-up area 845 925 130 160
+  set wr-stand-up (patch-set top-stand-up corridor-stand-up reception-stand-up)
+  set all-wr (patch-set wr wr-stand-up)
+  set wr1 (patch-set wrmain)
+
+  set gp area 619 671 25 72
+  set tr1 area 441 518 22 70
+  set tr5 area 523 564 22 70
+  set tr4 area 569 611 22 70
+  set tr2 area 442 524 200 253
+  set tr3 area 529 611 200 253
+  set trtot (patch-set tr1 tr2 tr3 tr4 tr5)
+
+  ;cdu
+  set cdu1 area 287 371 1219 1376
+  set cdu2 area 287 371 1381 1527
+  set ambulatory area 519 521 1222 1263
+  set stretcher1 area 320 320 800 800
+  set stretcher2 area 320 320 968 968
+  set stretcher3 area 376 376 1052 1052
+  set stretcher4 area 432 432 992 992
+  set stretcher5 area 376 376 752 752
+
+
+  ;utc
+  set utc1 area 541 604 443 486
+  set utc2 area 539 604 513 556
+  set utc3 area 506 566 726 751
+  set utc4 area 503 571 764 786
+  set utc5 area 508 574 806 834
+  set utc6 area 596 661 904 964
+  set utc7 area 681 727 924 974
+  set utc8 area 747 822 932 967
+  let utcleft area 666 690 725 789
+  let utcright area 682 764 725 743
+  set utcmain (patch-set utcleft utcright)
+  set utc-rooms (patch-set utc1 utc2 utc3 utc4 utc5 utc6 utc7 utc8)
+
+  ;xray/ct/us
+  set xr1 area 852 932 734 854
+  set xr2 area 1035 1140 874 987
+  set cat area 1180 1301 854 934
+  set us area 997 1093 1137 1195
+
+  ;resus
+  set r1 area 290 310 415 448
+  set r2 area 223 250 548 563
+  set r3 area 371 423 608 626
+  set r4 area 371 423 501 521
+  set rtot (patch-set r1 r2 r3 r4)
+
+  ;*****DOORS*****
+
+  ;Majors
+  set dmaj1 area 282 288 640 664
+  set dmaj2 area 282 288 686 720
+  set dmaj3 area 282 288 750 808
+  set dmaj4 area 282 288 838 876
+  set dmaj5 area 282 288 912 944
+  set dmaj6 area 282 288 974 1008
+  set dmaj7 area 282 288 1030 1054
+  set dmaj8 area 218 252 1130 1136
+  set dmaj9 area 270 302 1130 1136
+  set dmaj10 area 322 350 1130 1136
+  set dmaj11 area 390 432 1130 1136
+  set dmaj12 area 494 500 1072 1092
+  set dmaj12a area 494 500 992 1014
+  set dmaj14 area 494 500 932 966
+  set dmaj15 area 494 500 860 886
+  set dmajmainl area 334 340 882 908
+  set dmajmainr area 410 416 886 908
+
+  ;triage
+  set dgp area 646 674 102 108
+  set dtr1 area 465 500 102 108
+  set dtr2 area 455 505 170 176
+  set dtr3 area 550 595 170 176
+  set dtr4 area 575 605 102 108
+  set dtr5 area 529 560 102 108
+
+  ;cdu
+  set dcdu1 area 436 444 1294 1343
+  set dcdu2 area 428 434 1385 1420
+
+  ;utc
+  set dutc1 area 492 498 458 486
+  set dutc2 area 501 509 523 551
+  set dutc3 area 586 592 736 764
+  set dutc4 area 586 592 764 794
+  set dutc5 area 586 592 794 820
+  set dutc6 area 629 664 894 900
+  set dutc7 area 679 704 894 900
+  set dutc8 area 742 772 894 900
+
+  ;xray/ct/us
+  set dxr1 area 986 994 744 796
+  set dxr2 area 1073 1123 796 802
+  set dcat area 1193 1243 796 802
+  set dus area 1113 1138 1130 1136
+
+  ;resus
+  set dr1 area 358 408 382 388
+  set dr2 area 290 330 626 632
+
+  ;ambulance and walk-in
+  set dambulance1 area 381 419 18 24
+  set dambulance2 area 381 419 94 100
+  set dwalk-in1 area 935 975 14 20
+  set dwalk-in2 area 935 975 104 110
+
+  ;*****CORNERS******
+  ;majors
+  set cmaj1 area 298 334 677 731
+  set cmaj2 area 298 320 877 905
+  set cmaj3 area 296 333 1093 1110
+  set cmaj4 area 454 483 1090 1116
+  set cmaj5 area 423 442 915 945
+  set cmaj6 area 450 480 683 712
+
+  ;cdu
+  set ccdu1 area 455 480 1225 1250
+  set ccdu2 area 458 505 1384 1418
+
+
+  ;triage
+  set ct1 area 375 416 124 155
+  set ct2 area 296 330 355 374
+  set ct3 area 370 405 350 370
+  set ct4 area 453 485 369 402
+  ;ct5 is a 'corner' in the middle of the traige section
+  set ct5 area 505 535 130 150
+
+  ;reception
+  set crec1 area 930 990 100 157
+  set crec2 area 719 747 132 162
+  set crec3 area 616 651 122 147
+  set crec4 area 629 651 285 305
+  set crec5 area 621 656 370 393
+  set crec6 area 717 744 365 398
+
+  ;pediatrics
+  set cped1 area 1095 1133 122 157
+  set cped2 area 1065 1103 405 441
+  set cped3 area 1080 1123 671 706
+
+  ;minors
+  set cmin1 area 631 660 679 704
+  set cmin2 area 614 651 809 841
+  set cmin2a area 660 701 813 839
+  set cmin3 area 1002 1042 669 704
+  set cmin4 area 997 1022 746 779
+  set cmin5 area 997 1022 1014 1029
+  set cmin6 area 1123 1140 1017 1034
+  set cmin7 area 1325 1384 720 793
+  set admit area 1161 1164 659 712
+end
+;++++++++++++++++++++++++++++++++ REPORTERS AND OTHERS +++++++++++++++++++++++++++++++
+;import data
+to import-fixed-data
+
+  file-close-all ; close all open files
+
+  if not file-exists? "fixed_data.2.csv" [
+    user-message "No file 'fixed_data.csv' exists! Create a file with data (located in same directory and .csv NOT .xls)."
+    stop
+  ]
+
+  file-open "fixed_data.2.csv" ; open the file with the data
+
+  ; We'll read all the data in a single loop
+    while [ not file-at-end? ] [
+    ; here the CSV extension grabs a single line and puts the read data in a list
+    set data csv:from-row file-read-line
+
+    set walk-in-arrival item 0 data
+    set ambulance-arrival item 1 data
+
+    ;; priorities
+
+    set priority-1 item 2 data
+    set priority-2 item 3 data
+    set priority-3 item 4 data 	
+    set priority-4 item 5 data
+    set priority-5 item 6 data
+    set prio1-gp   item 7 data
+    set prio1-exit item 8 data
+    set prio3-maj   item 9 data
+    set prio3-utc item 10 data
+
+    ;; leaving probabilities
+
+    set resus-admit item 11 data
+    set gp-exit     item 12 data
+    set utc-wr      item 13 data
+    set utc-imag    item 14 data
+    set utc-exit    item 15 data
+    set maj-exit    item 16 data
+    set maj-cdu     item 17 data
+    set maj-admit   item 18 data
+    set maj-imag    item 19 data
+    set cdu-exit    item 20 data
+    set cdu-admit   item 21 data
+    set cdu-amb     item 22 data
+
+    ;; waiting time in each section of ED
+
+    set wait-triage item 23 data
+    set wait-resus  item 24 data
+    set wait-maj  	item 25 data
+    set wait-utc	  item 26 data
+    set wait-gp	    item 27 data
+    set wait-imag	  item 28 data
+    set wait-cdu    item 29 data
+
+    ;; doctor waititing time
+
+    set doc-wait-resus item 30 data
+    set doc-wait-maj item 31 data
+
+  ]
+
+  file-close ; make sure to close the file
+
+  ;; converting waiting times form minutes (from excel) to ticks
+
+  set wait-triage wait-triage * tick-con
+  set wait-resus wait-resus   * tick-con
+  set wait-maj wait-maj       * tick-con
+  set wait-utc wait-utc       * tick-con
+  set wait-gp  wait-gp        * tick-con
+  set wait-imag wait-imag     * tick-con
+  set wait-cdu  wait-cdu      * tick-con
+  set doc-wait-resus doc-wait-resus * tick-con
+  set doc-wait-maj doc-wait-maj     * tick-con
+
+end
+
+
+to import-changing-data
+
+  ;you want this precedure to run in Go. So you cannot have open file here as it will keep opening and closing the file every tick
+  ;So you open the file in setup and and run the commands on what you want it to do in Go
+  ;Don't close the changing_data file (in netlogo)
+
+  set numbers 0
+ ; repeats this 24 times i.e. for 24 hour
+  repeat 28 [
+
+    if ticks = numbers [
+
+      ; to avoid changing the doctors if they are same as before
+
+      let previous-majdoc  n-doctors-majors
+      let previous-tridoc  n-doctors-triage
+      let previous-utcdoc  n-doctors-utc
+      let previous-xrdoc   n-doctors-xr
+      let previous-trinur  n-nurses-triage
+      let previous-majnur  n-nurses-majors
+      let previous-utcnur  n-nurses-utc
+      let previous-gpdoc   n-doctors-gp
+
+      set change-numbers csv:from-row file-read-line
+
+        ;here the items represents the columns of the data. File is read per row every 'numbers' of ticks
+
+      set arrival-rate item 0 change-numbers
+      set n-doctors-majors item 1 change-numbers
+      set n-doctors-triage item 2 change-numbers
+      set n-doctors-utc    item 3 change-numbers
+      set n-doctors-xr     item 4 change-numbers
+      set n-nurses-triage  item 5 change-numbers
+      set n-nurses-majors  item 6 change-numbers
+      set n-nurses-utc     item 7 change-numbers
+      set n-doctors-gp     item 8 change-numbers
+
+      if previous-majdoc != n-doctors-majors [make-doctors-maj]
+      if previous-tridoc != n-doctors-triage [make-doctors-tr]
+      if previous-utcdoc != n-doctors-utc    [make-doctors-utc]
+      if previous-xrdoc != n-doctors-xr      [make-doctors-xr]
+      if previous-trinur != n-nurses-triage  [make-nurses-tr]
+      if previous-majnur != n-nurses-majors  [make-nurses-maj]
+      if previous-utcnur != n-nurses-utc     [make-nurses-utc]
+      if previous-gpdoc != n-doctors-gp      [make-doctors-gp]
+
+   ;; if you want them to change every hour regardless of same numbers, choose this section ;;
+
+    ; make-doctors-maj
+    ; make-doctors-tr
+    ; make-doctors-utc
+    ; make-doctors-xr
+    ; make-nurses-tr
+    ; make-nurses-maj
+    ; make-nurses-utc
+    ; make-doctors-gp
+
+    ]
+    set numbers numbers + (tick-con * 60)
+  ]
+
+end
+
+to make-maj-lists
+  set majors (list maj1 maj2 maj3 maj4 maj5 maj6 maj7 maj8 maj9 maj10 maj11 maj12 maj12a maj14 maj15 r1 r2 r3 r4)
+  set nmajors (list nmaj1 nmaj2 nmaj3 nmaj4 nmaj5 nmaj6 nmaj7 nmaj8 nmaj9 nmaj10 nmaj11 nmaj12 nmaj12a nmaj14 nmaj15)
+  set majors-mp (list pmaj1 pmaj2 pmaj3 pmaj4 pmaj5 pmaj6 pmaj7 pmaj8 pmaj9 pmaj10 pmaj11 pmaj12 pmaj12a pmaj14 pmaj15 pr1 pr2 pr3 pr4)
+  set majors-lists (list majmain-to-maj1 majmain-to-maj2 majmain-to-maj3 majmain-to-maj4 majmain-to-maj5 majmain-to-maj6 majmain-to-maj7 majmain-to-maj8 majmain-to-maj9
+    majmain-to-maj10 majmain-to-maj11 majmain-to-maj12 majmain-to-maj12a majmain-to-maj14 majmain-to-maj15 majmain-to-r1 majmain-to-r2 majmain-to-r3 majmain-to-r4)
+end
+
+to priority-calc
+  ;assign the priority = urgency*waitime of a patient to the maxpatch of a room
+  let i 0
+  foreach majors [x ->
+;    if [occupancy] of item i mp = 0 [
+;      ask item i mp [
+;        set patient-priority 0
+;      ]
+;    ]
+    ifelse any? patients-on x [
+    ask one-of patients-on x [
+        set triage 1
+        let priority urgency * ( wait-time - (doctor-time * 1.5))
+      ask item i majors-mp [ if occup-cdu = 0[
+      set patient-priority priority]
+        ]
+      ]
+    ][
+      ask item i majors-mp [
+        set patient-priority 0
+      ]
+    ]
+    set i i + 1
+  ]
+end
+
+to move-maj-doctors
+  if any? doctors-on majmaintot [
+    let current-doc one-of doctors-on majmaintot
+    if [target-list] of current-doc = 0 [
+      ask current-doc [
+        let i 0
+        set destination 0
+        set iteration 0
+        let maxpriority -10000000
+        foreach majors-mp [x ->
+          ask x [
+            if [occupancy] of x != 0 [
+              let priority patient-priority
+            if priority >= maxpriority and [occupancy] of x != 2 [
+              set maxpriority priority
+              set destination item i majors-lists
+              set iteration i
+              ]
+            ]
+          ]
+
+          set i i + 1
+        ]
+        ask item iteration majors-mp [
+          if occupancy = 1 [
+            set occupancy 2
+            ask current-doc [
+              set target-list destination
+              set counter -2
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+end
+
+to leave-n
+  let i 0
+  foreach nmajors [x ->
+    if any? nurses-on x [
+      ask nurses-on x [
+        if (any? doctors-on x) or (not any? patients-on x) or (wait-time > (10 * tick-con)) [
+         ; print "Leave Patient"
+          set target-list reverse item i majors-lists
+          set follower 0
+        ]
+      ]
+    ]
+    set i i + 1
+  ]
+  ask nurses with [follower != 0][
+    let current-nurse nurse who
+    ask follower [
+      if (member? patch-here wrmajtot = true) and (target-list = 0)  [
+        ask current-nurse [
+          set target-list wrmaj-to-majmain
+          set counter -2
+          set follower 0
+        ]
+      ]
+      if (member? patch-here cmin1) and (nurse-ready = 1)[
+        ask current-nurse [
+          set target-list cmin1-to-utcmain
+          set counter -2
+          set follower 0
+        ]
+      ]
+    ]
+  ]
+end
+
+to nurses-pickup [#patient]
+  ask #patient [
+    ifelse member? patch-here all-wr = true [
+      if nurse-following = nobody [
+        set getting-picked-up 0
+      ]
+    if [getting-picked-up] of #patient = 0 [
+      if any? nurses-on utcmain [
+        ask one-of nurses-on utcmain [
+            let current-nurse nurse who
+          if (target-list = 0) and (follower = 0) [
+            set target-list utcmain-to-crec5
+            set counter -2
+            set follower #patient
+            ask #patient [
+              set getting-picked-up 1
+              set nurse-following current-nurse
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+  [
+     if nurse-following = nobody [
+       set getting-picked-up 0
+      ]
+      if [getting-picked-up] of #patient = 0 [
+      if any? nurses-on majmaintot [
+        ask one-of nurses-on majmaintot [
+          let current-nurse nurse who
+          if (target-list = 0) and (follower = 0) [
+            set target-list majmain-to-ct1
+            set counter -2
+            set follower #patient
+            ask #patient [
+              set getting-picked-up 1
+              set nurse-following current-nurse
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+  ]
+  ask nurses with [follower = #patient] [
+    let target-patient (turtle-set #patient)
+    if target-list = 0 [
+      ask #patient [
+        set nurse-ready 1
+      ]
+    ]
+  ]
+end
+
+to walk-nurses
+  ask nurses with [target-list = 0] with [follower != 0] [
+    face follower
+    let target-patient (turtle-set follower)
+    if not any? target-patient in-radius (step * 3) [
+      ifelse (any? other turtles in-cone 4 60 = true) or (any? other turtles with [shape = "container"] in-cone 8 60 = true)
+      [ rt (random 90) - 45
+        bk (step / 2)  ]
+      [fd step
+      set wait-time 0]
+    ]
+  ]
+end
+
+to call-od [start-room goal-room mp urg1 urg2 list-name]
+  if [occupancy] of mp = 0 and any? doctors-on goal-room [
+   let waiting-patients patients-on start-room
+   let urgency-patients waiting-patients with [urgency >= urg1] with [urgency <= urg2]
+   let seen-patients urgency-patients with [triage = 1]
+   let untargeted-patients seen-patients with [target-list = 0]
+   if any? untargeted-patients [
+      let sickest one-of untargeted-patients with-max [priority1]
+      ask sickest [
+        if (wait-time > 1) [
+          ifelse (urg1 > 1) and (member? patch-here all-wr)[
+          nurses-pickup patient who
+          if nurse-ready = 1 [
+            set target-list list-name
+            set counter -2
+            set priority1 0
+            set treat? 1
+            ask mp [
+              set occupancy 1
+              ]
+            ]
+          ][
+            set target-list list-name
+            set counter -2
+            set priority1 0
+            set treat? 1
+            ask mp [
+              set occupancy 1
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+end
+
+to call-on [start-room goal-room mp list-name]
+  if [occupancy] of mp = 0 and any? nurses-on goal-room [
+  let waiting-patients patients-on start-room
+  let unseen-patients waiting-patients with [triage = 0]
+  let untargeted-patients unseen-patients with [target-list = 0]
+  if any? untargeted-patients [
+      let sickest one-of untargeted-patients with-max [priority1]
+      ask sickest [
+        if (wait-time > 1)[
+          set target-list list-name
+          set counter -2
+          set priority1 0
+          ask mp [
+            set occupancy 1
+          ]
+        ]
+      ]
+    ]
+  ]
+end
+
+to call-o [start-room goal-room mp list-name]
+  if [occupancy] of mp = 0 [
+    if [occup-cdu] of mp = 0 [
+     let waiting-patients patients-on start-room
+     let untargeted-patients waiting-patients with [target-list = 0]
+     if any? untargeted-patients [
+      let sickest one-of untargeted-patients with-max [priority1]
+      ask sickest [
+          if (wait-time > 1)[
+          set target-list list-name
+          set counter -2
+          set priority1 0
+           set treat? 1
+            set triage 1
+          ask mp [
+            set occupancy 1
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+end
+
+to call-cdu [start-room goal-room mp list-name]
+    if [occupancy] of mp = 0 and [occup-cdu] of mp = 0 [
+     let waiting-patients patients-on start-room
+     let untargeted-patients waiting-patients with [target-list = 0]
+     if any? untargeted-patients [
+      let sickest one-of untargeted-patients with-max [priority1]
+      ask sickest [
+        if (wait-time > 1)[
+          set target-list list-name
+            set counter -2
+            set priority1 0
+          set cdu-patient 1
+            ask mp [
+              set occup-cdu 1
+          ]
+        ]
+      ]
+    ]
+  ]
+end
+
+to move [start-room list-name]
+  if any? turtles-on start-room [
+    ask one-of turtles-on start-room [
+      if target-list = 0 [
+        set target-list list-name
+        set counter -2
+      ]
+    ]
+  ]
+end
+
+to move-amb [start-room #5 list5 #4 list4 #3 list3 #2 list2 #1 list1]
+  if any? turtles-on start-room [
+    ask one-of turtles-on start-room [
+      if target-list = 0 [
+        (ifelse
+    urgency = #1 [
+       set target-list  list1
+      ]
+     urgency = #2 [
+       set target-list list2
+      ]
+     urgency = #3 [
+       set target-list list3
+      ]
+     urgency = #4 [
+       set target-list list4
+      ]
+     urgency = #5 [
+       set target-list list5
+      ])
+        set counter -2
+      ]
+    ]
+  ]
+end
+
+to leave [start-room mp time list-name]
+  if any? doctors-on start-room [ ask patients-on start-room[set doctor-time doctor-time + 1]]
+  if any? nurses-on start-room [ ask patients-on start-room [set doctor-time doctor-time + 0.5]]
+  if any? patients-on start-room[
+    ask patients-on start-room [
+      if time? = 0 and counter = 0 and  cdu-patient = 0 [
+       set treatment-time random-poisson time
+        set time? 1
+      ]
+      if doctor-time > treatment-time  [
+        ask mp [
+          set occupancy 0
+        ]
+        set target-list list-name
+        set counter -2
+        set doctor-time 0
+        set triage 1
+        set origin colour-cor patch-here
+        set time? 0
+      ]
+    ]
+  ]
+end
+
+to leave-utc [start-room mp time list-name]
+  if any? doctors-on start-room [ ask patients-on start-room[set doctor-time doctor-time + 1]]
+  if any? nurses-on start-room [ ask patients-on start-room [set doctor-time doctor-time + 0.5]]
+  if any? patients-on start-room[
+    ask patients-on start-room [
+      if time? = 0 and counter = 0 and  cdu-patient = 0 [
+       set treatment-time random-poisson time
+        set time? 1
+      ]
+      if doctor-time > treatment-time or wait-time > treatment-time  [
+        ask mp [
+          set occupancy 0
+        ]
+        set target-list list-name
+        set counter -2
+        set doctor-time 0
+        set triage 1
+        set origin colour-cor patch-here
+        set time? 0
+      ]
+    ]
+  ]
+end
+
+to leave-tr [start-room mp time #5 list5 #4 list4 #3 list3 #2 list2 #1 list1]
+  if any? doctors-on start-room [ ask patients-on start-room[set doctor-time doctor-time + 1]]
+  if any? nurses-on start-room [ ask patients-on start-room [set doctor-time doctor-time + 0.5]]
+  if any? patients-on start-room[
+  ask patients-on start-room [
+      if time? = 0 and counter = 0 [
+       set treatment-time random-poisson time
+        set urg3-list list3
+        set time? 1
+      ]
+      if target-list = 0 [
+        let urg urgency
+        if doctor-time > time or wait-time > treatment-time * 2 [
+          set ready-to-leave 1
+        ]
+        if ready-to-leave = 1[
+          (ifelse
+            urg = #1 [
+              set target-list list1
+              ask mp [set occupancy 0]
+            ]
+            urg = #2 [
+              set target-list list2
+              ask mp [set occupancy 0]
+            ]
+            urg = #3 [
+              ifelse urg3-list = list4 [
+                 nurses-pickup patient who
+                 if nurse-ready = 1 [
+                  set target-list list4
+                  ask mp [set occupancy 0]
+                ]
+              ][
+                set target-list list2
+                ask mp [set occupancy 0]
+              ]
+            ]
+            urg = #4 [
+              nurses-pickup patient who
+              if nurse-ready = 1 [
+                set target-list list4
+                ask mp [set occupancy 0]
+              ]
+            ]
+            urg = #5 [set target-list list5
+              ask mp [set occupancy 0]
+          ])
+          set counter -2
+          set doctor-time 0
+          set triage 1
+          set time? 0
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to leave-d [start-room mp time list-name]
+    if any? doctors-on start-room [
+    ask doctors-on start-room [
+      if target-list = 0 [
+      if (wait-time > time) or [occupancy] of mp = 0 or any? patients-on start-room = false[
+       ;set occupancy to 1 since there will be a patient there
+       ask mp [
+          if occupancy = 2 [
+       set occupancy 1
+          ]
+        ]
+       set target-list list-name
+       set counter -2
+        ]
+      ]
+    ]
+  ]
+end
+
+to leave-cdu [start-room mp time list-name]
+ if any? patients-on start-room[
+  ask patients-on start-room [
+            if time? = 0 and counter = 0 and cdu-patient = 1[
+       set treatment-time random-poisson time
+        set time? 1
+      ]
+      if cdu-patient =  1 [
+      if wait-time > treatment-time [
+       ask mp [
+       set occup-cdu 0]
+      set target-list list-name
+      set counter -2
+      set doctor-time 0
+      set triage 1
+      set shape "dot"
+      set size 11
+      ]
+    ]
+  ]
+  ]
+end
+
+to leave-xr [start-room mp time list1]
+  if any? doctors-on start-room [ ask patients-on start-room[set doctor-time doctor-time + 1]]
+  if any? nurses-on start-room [ ask patients-on start-room [set doctor-time doctor-time + 0.5]]
+ if any? patients-on start-room[
+  ask patients-on start-room [
+      if time? = 0 and counter = 0 [
+       set treatment-time time
+        set time? 1
+      ]
+
+      if doctor-time > treatment-time or wait-time > treatment-time * 2[
+       ask mp [
+           set occupancy 0]
+       if origin = 75.6 [
+          ifelse loops < 1 [
+            set target-list (sentence cmin1-to-cmaj6 list1)
+            set loops loops + 1 ]
+          [set target-list (sentence cmin1-to-admit list1)
+          set loops loops + 1]
+          ]
+       if origin = 43.9 [
+          ifelse loops < 1 [
+          set target-list (sentence cmin1-to-wr list1)
+            set loops loops + 1]
+            [set target-list (sentence cmin1-to-exit list1)]
+          ]
+       set counter -2
+       set doctor-time 0
+       set triage 1
+       set time? 0
+       ]
+    ]
+  ]
+end
+
+to full-cdu
+
+    (ifelse
+
+           any? patients-on half-patch 320 800 = false [
+
+      move-to half-patch 320 800
+
+        set shape "container"
+
+    set size 15
+
+    set heading 90
+
+    set cdu-patient 1
+
+    ]
+
+           any? patients-on half-patch 320 964 = false [
+
+      move-to half-patch 320 964
+
+        set shape "container"
+
+    set size 15
+
+    set heading 90
+
+    set cdu-patient 1
+
+    ]
+
+
+
+            any? patients-on half-patch 376 1052 = false [
+
+      move-to half-patch 376 1052
+
+        set shape "container"
+
+    set size 15
+
+    set heading 0
+
+    set cdu-patient 1
+
+    ]
+
+            any? patients-on half-patch 432 992 = false [
+
+      move-to half-patch 432 992
+
+        set shape "container"
+
+    set size 15
+
+    set heading 90
+
+    set cdu-patient 1
+
+    ]
+
+       any? patients-on half-patch 376 752 = false [
+
+      move-to half-patch 376 752
+
+        set shape "container"
+
+    set size 15
+
+    set heading 0
+
+    set cdu-patient 1
+
+    ]
+
+   )
+
+end
+
+to walk
+  if target-list != 0[
+    set wait-time 0
+    if counter = -2 [
+      set counter ((length target-list) - 1)
+  ]
+  set next-target item counter target-list
+    face one-of next-target
+    proceed step]
+end
+
+ to proceed [a]
+  ifelse member? patch-here next-target = false [
+    ifelse (any? other turtles in-cone 4 60 = true) or (any? other turtles with [shape = "container"] in-cone 8 60 = true)
+      [ rt (random 120) - 60
+        bk a  ]
+      [fd a]
+  ]
+  [set counter counter - 1]
+end
+
+to set-patch-occupancy
+
+  let freerooms (list pmaj1 pmaj2 pmaj3 pmaj4 pmaj5 pmaj6 pmaj7 pmaj8 pmaj9 pmaj10 pmaj11 pmaj12 pmaj12a pmaj14 pmaj15 pcdu1 pcdu2 pr1 pr2 pr3 pr4)
+  ask patches [
+    set occupancy 1
+      ]
+  foreach freerooms [x ->
+    ask x [
+    set occupancy 0
+    ]
+  ]
+end
+
+to check-room [room]
+  ask room [
+    set pcolor blue]
+end
+
+to-report colour-cor [patch-start]
+  report [pcolor] of patch-start
+end
+
+to remove-all
+  ask turtles [
+    die
+  ]
+
+end
+; I use this to debug and check the current occupancy of any room during simulation
+to check-occupancy [room#]
+ ask maxpatch room# [
+    user-message ( word "occupancy = " occupancy " priority = " patient-priority)
+  ]
+end
+
+to-report vary [ #min #max ]  ; random float in given range
+  report (#min + 1) + random ((#max - 1) - (#min + 1))
+end
+
+to check-prev [room#]
+ ask maxpatch room# [
+    user-message previous]
+end
+
+; Remember: prob1 can't be 0!!
+to-report routes [list1 prob1 list2 prob2 list3 prob3 list4 prob4]
+  let percent random 100
+  if percent <= prob1 [report list1]
+  if percent <= (prob2 + prob1) and percent > prob1 [report list2]
+  if percent <= (prob1 + prob2 + prob3) and percent > (prob2 + prob1) [report list3]
+  if percent <= (prob1 + prob2 + prob3 + prob4) and percent > (prob1 + prob2 + prob3) [report list4]
+end
+
+to-report routes-urg [prob1 prob2 prob3 prob4 prob5]
+  let percent random-float 100
+  if percent <= (prob1 ) [report 1]
+  if percent <= (prob2 + prob1 ) and percent > (prob1) [report 2]
+  if percent <= (prob1 + prob2 + prob3 ) and percent > (prob2 + prob1 ) [report 3]
+  if percent <= (prob1 + prob2 + prob3 + prob4 ) and percent > (prob1 + prob2 + prob3 ) [report 4]
+  if percent <= (prob1 + prob2 + prob3 + prob4 + prob5 ) and percent > (prob1 + prob2 + prob3 + prob4 ) [report 5]
+end
+
+
+; Finds the top-right patch in any area or patchset
+to-report maxpatch [room]
+  let x [pxcor] of room
+  let y [pycor] of room
+  report patch max x max y
+end
+
+;generates a number between and inclusive 'a' and 'b'
+to-report random-between-inc [a b]
+  report a + random (b - a)
+end
+
+to update-n
+  if ticks = n [
+    set n n + (tick-con)]
+end
+
+to-report area [l r b t]
+  let coordinates patches with [pxcor >= (l / 4) and pxcor <= (r / 4) and pycor >= (b / 4) and pycor <= (t / 4)]
+  report coordinates
+end
